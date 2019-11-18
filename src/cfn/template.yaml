@@ -1,0 +1,254 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Amazon Rekognition ***REMOVED*** Demo (uksb-1q6fl3pi5)
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Environment:
+      Variables:
+        API_GATEWAY: !Sub https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/PROD
+        COGNITO_IDENTITY_POOL: !Ref CognitoIdentityPool
+        COLLECTION_ID: !Ref CollectionId
+        FROM_BUCKET: !Sub solution-builders-${AWS::Region}
+        CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
+        REGION: !Ref AWS::Region
+        TO_BUCKET: !Ref WebUIBucket
+        VERSION: '0.1'
+  Api:
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
+Parameters:
+  CollectionId:
+    Description: AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
+    Type: String
+    Default: Rekog***REMOVED***Demo
+    AllowedPattern : ^[a-zA-Z0-9_]*$
+  CreateCloudFrontDistribution:
+    Description: Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level.
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+Conditions:
+  WithCloudFront: !Equals [!Ref CreateCloudFrontDistribution, 'true']
+Outputs:
+  url:
+    Value: !If 
+      - WithCloudFront
+      - !Sub 'https://${CloudFrontDistribution.DomainName}'
+      - !Sub 'https://${WebUIBucket.RegionalDomainName}/index.html'
+    Description: Engagement Meter URL
+Resources:
+  SetupRekognitionAndWebUI:
+    Type: Custom::Setup
+    Properties:
+      ServiceToken: !GetAtt LambdaSetup.Arn
+      Region: !Ref AWS::Region
+  WebUIBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+        - AllowedHeaders: ['*']
+          AllowedMethods: [GET]
+          AllowedOrigins: ['*']
+          Id: !Sub RekogCorsRule${CollectionId}
+          MaxAge: 3600
+  WebUIBucketReadPolicy:
+    Type: AWS::S3::BucketPolicy
+    Condition: WithCloudFront
+    Properties:
+      Bucket: !Ref WebUIBucket
+      PolicyDocument:
+        Statement:
+        - Action: s3:GetObject
+          Effect: Allow
+          Resource: !Sub arn:aws:s3:::${WebUIBucket}/*
+          Principal:
+            CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+  CognitoIdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      IdentityPoolName: !Sub RekogIdentityPool${CollectionId}
+      AllowUnauthenticatedIdentities: true
+  CognitoIdentityPoolRole:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref CognitoIdentityPool
+      Roles:
+        authenticated: !GetAtt ApiGatewayInvokeRole.Arn
+        unauthenticated: !GetAtt ApiGatewayInvokeRole.Arn
+  RekognitionInvokeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonRekognitionFullAccess
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - sts:AssumeRole
+  ApiGatewayInvokeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated:
+                - cognito-identity.amazonaws.com
+            Action:
+              - sts:AssumeRoleWithWebIdentity
+  CustomResourceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: Rekog***REMOVED***Demo-setup-S3-fc
+          PolicyDocument:
+            Statement:
+            - Effect: Allow
+              Action: 's3:*'
+              Resource: '*'
+        - PolicyName: Rekog***REMOVED***Demo-cloudwatch-logs
+          PolicyDocument:
+            Statement:
+            - Effect: Allow
+              Action: 'logs:*'
+              Resource: 'arn:aws:logs:*:*:*'
+  RestApi:
+    Type: AWS::Serverless::Api
+    Name: !Sub Rekog***REMOVED***Demo-${CollectionId}
+    Properties:
+      StageName: PROD
+      EndpointConfiguration: REGIONAL
+      DefinitionBody:
+        swagger: 2.0
+        info:
+          version: 1.0
+          title: !Sub Rekog***REMOVED***Demo-${CollectionId}
+        basePath: /PROD
+        paths:
+          /labels/detect:
+            post:
+              consumes:
+                - application/json
+              produces:
+                - application/json
+              responses:
+                "200":
+                  description: 200 response
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: string
+                    Access-Control-Allow-Headers:
+                      type: string
+                "400":
+                  description: 400 response
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: string
+                    Access-Control-Allow-Headers:
+                      type: string
+                "500":
+                  description: 500 response
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: string
+                    Access-Control-Allow-Headers:
+                      type: string
+              x-amazon-apigateway-integration:
+                credentials: !GetAtt RekognitionInvokeRole.Arn
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:rekognition:path//
+                responses:
+                  4\d{2}:
+                    statusCode: "400"
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+                      method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+                  5\d{2}:
+                    statusCode: "500"
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+                      method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+                  "200":
+                    statusCode: "200"
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+                      method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+                requestParameters:
+                  integration.request.header.X-Amz-Target: "'RekognitionService.DetectLabels'"
+                  integration.request.header.Content-Type: "'application/x-amz-json-1.1'"
+                requestTemplates:
+                  application/json: |
+                    {
+                      "Attributes": ["ALL"],
+                      "Image": {
+                        "Bytes": $input.json('$.image')
+                      }
+                    }
+                passthroughBehavior: when_no_match
+                httpMethod: POST
+                type: aws
+              security:
+              - sigv4: []
+  LambdaSetup:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub Rekog***REMOVED***DemoSetup${CollectionId}
+      Runtime: nodejs10.x
+      Handler: index.handler
+      CodeUri: ../backend/functions/setup/
+      Description: !Sub Custom Lambda resource for the ${CollectionId} Cloudformation Stack
+      MemorySize: 128
+      Timeout: 30
+      Role: !GetAtt CustomResourceRole.Arn
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Condition: WithCloudFront
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Ref WebUIBucket
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Condition: WithCloudFront
+    Properties:       
+      DistributionConfig:
+        Origins:
+        - DomainName: !GetAtt WebUIBucket.RegionalDomainName
+          Id: !Sub myS3Origin-${CollectionId}
+          S3OriginConfig:
+            OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
+        Enabled: true
+        HttpVersion: http2
+        Comment: The Distribution for the Rekognition Meter Web UI
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - HEAD
+          - GET
+          - OPTIONS
+          TargetOriginId: !Sub myS3Origin-${CollectionId}
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        PriceClass: PriceClass_All
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true

@@ -1,0 +1,12 @@
+.DS_Store
+.python-version
+backend
+dist
+frontend.zip
+node_modules
+npm-debug.log*
+src/web-ui/build
+src/web-ui/dist
+src/web-ui/public/settings.js
+taskcat_outputs
+templates

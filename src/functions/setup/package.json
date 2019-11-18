@@ -1,0 +1,12 @@
+{
+  "name": "lambda-custom-resource",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Setup the static S3 files",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "2.369.0",
+    "mime-types": "2.1.24",
+    "unzipper": "0.10.5"
+  }
+}

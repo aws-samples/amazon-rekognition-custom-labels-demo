@@ -1,0 +1,28 @@
+{
+  "name": "web-ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "aws-amplify": "1.1.40",
+    "react": "16.9.0",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "16.9.0",
+    "react-scripts": "3.1.2",
+    "react-webcam": "1.0.4"
+  },
+  "scripts": {
+    "start": "export HTTPS=true && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie > 0",
+    "not op_mini all"
+  ]
+}

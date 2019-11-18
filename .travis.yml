@@ -1,0 +1,41 @@
+dist: xenial
+language: node_js
+
+node_js: 
+  - "10"
+
+before_script:
+  - pyenv global 3.7
+  - python --version
+  - pip3 install -r requirements.txt --user
+
+script:
+  - npm run build
+  - npm t
+  - if [ $TRAVIS_PULL_REQUEST == true ] && [ $TRAVIS_BRANCH != "master" ]; then
+      npm run tag;
+    fi
+
+before_deploy:
+  # - npm run pre-deploy-test
+  - export VERSION=${TRAVIS_TAG:-$(npm run echo-version --silent)}
+  - if [ -z "$TRAVIS_TAG" ]; then npm run tag; fi
+  - npm run zip
+
+deploy:
+  - provider: releases
+    api_key:
+      secure: TODO
+    file: $VERSION.zip
+    skip_cleanup: true
+    on:
+      branch: master
+      condition: type != pull_request
+  - provider: script
+    skip_cleanup: true
+    script: npm run deploy
+    on:
+      tags: true
+
+notifications:
+  email: false
