@@ -22,18 +22,15 @@ export default ({ gateway }) => {
 
   const imageContainer = useRef(undefined);
 
-  const resetSummary = () => setDetectedLabels([]);
+  const resetSummary = () => setDetectedLabels([]) && setErrorDetails("");
 
-  const isValidImage = type => {
-    if (type.indexOf("data:image") !== 0) return false;
-    if (type.indexOf("data:image/svg+xml") === 0) return false;
-    return true;
-  };
+  const isValidImage = type =>
+    ["data:image/jpeg;base64", "data:image/png;base64"].includes(type);
 
   const processImage = file => {
     resetSummary();
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+
     reader.onload = () => {
       const [type, content] = reader.result.split(",");
       const isValid = isValidImage(type);
@@ -42,6 +39,12 @@ export default ({ gateway }) => {
       if (!isValid) setErrorDetails("The image format is not valid");
     };
     reader.onerror = () => setFormState("error");
+
+    try {
+      reader.readAsDataURL(file);
+    } catch (error) {
+      setFormState("error");
+    }
   };
 
   const calculateImageCoordinates = () => {
