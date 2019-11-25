@@ -41,11 +41,11 @@ Outputs:
       - !Sub 'https://${WebUIBucket.RegionalDomainName}/index.html'
     Description: Engagement Meter URL
 Resources:
-  SetupRekognitionAndWebUI:
-    Type: Custom::Setup
-    Properties:
-      ServiceToken: !GetAtt LambdaSetup.Arn
-      Region: !Ref AWS::Region
+  # SetupRekognitionAndWebUI:
+  #   Type: Custom::Setup
+  #   Properties:
+  #     ServiceToken: !GetAtt LambdaSetup.Arn
+  #     Region: !Ref AWS::Region
   WebUIBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -207,17 +207,17 @@ Resources:
                 type: aws
               security:
               - sigv4: []
-  LambdaSetup:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub RekogCustomLabelsDemoSetup${CollectionId}
-      Runtime: nodejs10.x
-      Handler: index.handler
-      CodeUri: ../backend/functions/setup/
-      Description: !Sub Custom Lambda resource for the ${CollectionId} Cloudformation Stack
-      MemorySize: 128
-      Timeout: 30
-      Role: !GetAtt CustomResourceRole.Arn
+  # LambdaSetup:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     FunctionName: !Sub RekogCustomLabelsDemoSetup${CollectionId}
+  #     Runtime: nodejs10.x
+  #     Handler: index.handler
+  #     CodeUri: ../backend/functions/setup/
+  #     Description: !Sub Custom Lambda resource for the ${CollectionId} Cloudformation Stack
+  #     MemorySize: 128
+  #     Timeout: 30
+  #     Role: !GetAtt CustomResourceRole.Arn
   CloudFrontOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Condition: WithCloudFront
