@@ -7,13 +7,13 @@ export default () => (
     variant="dark"
   >
     <Container>
-      <Navbar.Brand>Amazon Rekognition ***REMOVED*** Demo</Navbar.Brand>
+      <Navbar.Brand>Amazon Rekognition Custom Labels Demo</Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
         <Nav>
           <Nav.Link
             eventKey={1}
-            href="https://github.com/aws-samples/amazon-rekognition-***REMOVED***-demo"
+            href="https://github.com/aws-samples/amazon-rekognition-custom-labels-demo"
             target="_blank"
           >
             Fork me in github

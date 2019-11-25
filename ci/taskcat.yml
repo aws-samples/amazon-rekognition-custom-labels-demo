@@ -1,7 +1,7 @@
 ---
 global:
   owner: mfigus@amazon.com
-  qsname: amazon-rekognition-***REMOVED***-demo
+  qsname: amazon-rekognition-custom-labels-demo
   regions:
     - ap-northeast-1
     - ap-northeast-2

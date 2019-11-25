@@ -1,8 +1,8 @@
-## Amazon Rekognition ***REMOVED*** Demo
+## Amazon Rekognition Custom Labels Demo
 
 > TODO: Description
 
-[![Build Status](https://travis-ci.org/aws-samples/amazon-rekognition-***REMOVED***-demo.svg?branch=master)](https://travis-ci.org/aws-samples/amazon-rekognition-***REMOVED***-demo)
+[![Build Status](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo.svg?branch=master)](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo)
 
 
 ### Index
@@ -18,7 +18,7 @@
 
 ### Architecture
 
-The ***REMOVED*** Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognition) for label recognition, [Amazon API Gateway](https://aws.amazon.com/api-gateway) and [Amazon Cognito](https://aws.amazon.com/cognito) for the API, and [Amazon S3](https://aws.amazon.com/s3), [AWS Amplify](https://aws.amazon.com/amplify), and [React](https://reactjs.org) for the front-end layer.
+The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognition) for label recognition, [Amazon API Gateway](https://aws.amazon.com/api-gateway) and [Amazon Cognito](https://aws.amazon.com/cognito) for the API, and [Amazon S3](https://aws.amazon.com/s3), [AWS Amplify](https://aws.amazon.com/amplify), and [React](https://reactjs.org) for the front-end layer.
 
 <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
 
@@ -63,19 +63,19 @@ You are responsible for the cost of the AWS services used while running this sam
 
 |Region|Launch Template|
 |------|---------------|
-|**US East (N. Virginia)** (us-east-1) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-us-east-1.s3.us-east-1.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
-|**US East (Ohio)** (us-east-2) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-us-east-2.s3.us-east-2.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
-|**US West (Oregon)** (us-west-2) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-us-west-2.s3.us-west-2.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
-|**Asia Pacific (Seoul)** (ap-northeast-2) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-2#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-ap-northeast-2.s3.ap-northeast-2.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
-|**Asia Pacific (Sydney)** (ap-southeast-2) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-ap-southeast-2.s3.ap-southeast-2.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
-|**Asia Pacific (Tokyo)** (ap-northeast-1) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
-|**EU (Ireland)** (eu-west-1) | [![Launch the ***REMOVED***Demo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=***REMOVED***Demo&templateURL=https://solution-builders-eu-west-1.s3.eu-west-1.amazonaws.com/amazon-rekognition-***REMOVED***-demo/latest/main.template)|
+|**US East (N. Virginia)** (us-east-1) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-us-east-1.s3.us-east-1.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
+|**US East (Ohio)** (us-east-2) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-us-east-2.s3.us-east-2.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
+|**US West (Oregon)** (us-west-2) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-us-west-2.s3.us-west-2.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
+|**Asia Pacific (Seoul)** (ap-northeast-2) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-2#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-ap-northeast-2.s3.ap-northeast-2.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
+|**Asia Pacific (Sydney)** (ap-southeast-2) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-ap-southeast-2.s3.ap-southeast-2.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
+|**Asia Pacific (Tokyo)** (ap-northeast-1) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
+|**EU (Ireland)** (eu-west-1) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-eu-west-1.s3.eu-west-1.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/main.template)|
 
 2. If prompted, login using your AWS account credentials.
 1. You should see a screen titled "*Create Stack*" at the "*Specify template*" step. The fields specifying the CloudFormation template are pre-populated. Click the *Next* button at the bottom of the page.
 1. On the "*Specify stack details*" screen you may customize the following parameters of the CloudFormation stack:
-   * **Stack Name:** (Default: ***REMOVED***Demo) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
-   * **CollectionId:** (Default: Rekog***REMOVED***Demo) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
+   * **Stack Name:** (Default: CustomLabelsDemo) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
+   * **CollectionId:** (Default: RekogCustomLabelsDemo) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
    * **CreateCloudFrontDistribution**  (Default: false) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes)
 
    When completed, click *Next*
@@ -102,7 +102,7 @@ The application is accessed using a web browser. The address is the *url* output
 
 ### Remove the application
 
-To remove the application open the AWS CloudFormation Console, click the ***REMOVED***Demo project, right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "Events" tab. When it is done, the status will change from DELETE_IN_PROGRESS" to "DELETE_COMPLETE". It will then disappear from the list.
+To remove the application open the AWS CloudFormation Console, click the CustomLabelsDemo project, right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "Events" tab. When it is done, the status will change from DELETE_IN_PROGRESS" to "DELETE_COMPLETE". It will then disappear from the list.
 
 ### Making changes to the code and customization
 

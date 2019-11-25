@@ -1,5 +1,5 @@
 {
-  "name": "amazon-rekognition-***REMOVED***-demo",
+  "name": "amazon-rekognition-custom-labels-demo",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aws-samples/amazon-rekognition-***REMOVED***-demo.git"
+    "url": "git+https://github.com/aws-samples/amazon-rekognition-custom-labels-demo.git"
   },
   "bugs": {
-    "url": "https://github.com/aws-samples/amazon-rekognition-***REMOVED***-demo/issues"
+    "url": "https://github.com/aws-samples/amazon-rekognition-custom-labels-demo/issues"
   },
-  "homepage": "https://github.com/aws-samples/amazon-rekognition-***REMOVED***-demo#readme",
+  "homepage": "https://github.com/aws-samples/amazon-rekognition-custom-labels-demo#readme",
   "devDependencies": {
     "js-yaml": "3.13.1",
     "node-yaml": "4.0.1"

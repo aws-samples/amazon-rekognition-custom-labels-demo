@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Amazon Rekognition ***REMOVED*** Demo (uksb-1q6fl3pi5)
+Description: Amazon Rekognition Custom Labels Demo (uksb-1q6fl3pi5)
 Transform: AWS::Serverless-2016-10-31
 Globals:
   Function:
@@ -22,7 +22,7 @@ Parameters:
   CollectionId:
     Description: AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
     Type: String
-    Default: Rekog***REMOVED***Demo
+    Default: RekogCustomLabelsDemo
     AllowedPattern : ^[a-zA-Z0-9_]*$
   CreateCloudFrontDistribution:
     Description: Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level.
@@ -119,13 +119,13 @@ Resources:
               - sts:AssumeRole
       Path: /
       Policies:
-        - PolicyName: Rekog***REMOVED***Demo-setup-S3-fc
+        - PolicyName: RekogCustomLabelsDemo-setup-S3-fc
           PolicyDocument:
             Statement:
             - Effect: Allow
               Action: 's3:*'
               Resource: '*'
-        - PolicyName: Rekog***REMOVED***Demo-cloudwatch-logs
+        - PolicyName: RekogCustomLabelsDemo-cloudwatch-logs
           PolicyDocument:
             Statement:
             - Effect: Allow
@@ -133,7 +133,7 @@ Resources:
               Resource: 'arn:aws:logs:*:*:*'
   RestApi:
     Type: AWS::Serverless::Api
-    Name: !Sub Rekog***REMOVED***Demo-${CollectionId}
+    Name: !Sub RekogCustomLabelsDemo-${CollectionId}
     Properties:
       StageName: PROD
       EndpointConfiguration: REGIONAL
@@ -141,7 +141,7 @@ Resources:
         swagger: 2.0
         info:
           version: 1.0
-          title: !Sub Rekog***REMOVED***Demo-${CollectionId}
+          title: !Sub RekogCustomLabelsDemo-${CollectionId}
         basePath: /PROD
         paths:
           /labels/detect:
@@ -210,7 +210,7 @@ Resources:
   LambdaSetup:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub Rekog***REMOVED***DemoSetup${CollectionId}
+      FunctionName: !Sub RekogCustomLabelsDemoSetup${CollectionId}
       Runtime: nodejs10.x
       Handler: index.handler
       CodeUri: ../backend/functions/setup/
