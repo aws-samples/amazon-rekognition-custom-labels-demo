@@ -114,4 +114,4 @@ Contributions are more than welcome. Please read the [code of conduct](CODE_OF_C
 
 ## License Summary
 
-This sample code is made available under a modified MIT license. See the LICENSE file.
+This project is licensed under the Apache-2.0 License.
