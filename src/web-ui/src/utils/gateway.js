@@ -1,6 +1,13 @@
 import request from "./request";
 
 export default {
+  detectCustomLabels(projectVersionArn, image) {
+    return request("DetectLabels", {
+      Image: { Bytes: image },
+      ProjectVersionArn: projectVersionArn
+    });
+  },
+
   detectLabels(image) {
     return request("DetectLabels", {
       Attributes: ["ALL"],

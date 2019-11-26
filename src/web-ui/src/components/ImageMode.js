@@ -10,8 +10,11 @@ import {
   Row,
   Spinner
 } from "react-bootstrap";
+import { mapResults } from "../utils";
 
 import LabelsSummary from "./LabelsSummary";
+
+const validProjectVersionState = "RUNNING";
 
 export default ({ gateway }) => {
   const [detectedLabels, setDetectedLabels] = useState([]);
@@ -19,6 +22,7 @@ export default ({ gateway }) => {
   const [formState, setFormState] = useState("initial");
   const [image, setImage] = useState(undefined);
   const [imageCoordinates, setImageCoordinates] = useState({});
+  const [projects, setProjects] = useState(undefined);
 
   const imageContainer = useRef(undefined);
 
@@ -54,6 +58,25 @@ export default ({ gateway }) => {
   };
 
   const scrollHandler = useCallback(() => calculateImageCoordinates(), []);
+
+  useEffect(() => {
+    gateway.describeProjects().then(x =>
+      Promise.all(
+        x.ProjectDescriptions.map(project =>
+          gateway.describeProjectVersions(project.ProjectArn)
+        )
+      ).then(x => {
+        const result = mapResults(x, validProjectVersionState);
+        if (result.length === 0) {
+          setErrorDetails(
+            `There are no project versions with State=${validProjectVersionState} in the current account. This is mandatory in order to use this demo`
+          );
+          setFormState("error");
+        }
+        setProjects(result);
+      })
+    );
+  }, [gateway]);
 
   useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
@@ -100,15 +123,29 @@ export default ({ gateway }) => {
               )}
             </Col>
             <Col md={4} sm={6} className="scrollable-panel">
-              <Form>
-                <FormGroup>
-                  <FormControl
-                    type="file"
-                    onChange={e => processImage(e.target.files[0])}
-                    id="image"
-                  />
-                </FormGroup>
-              </Form>
+              {projects && projects.length > 0 && (
+                <Form>
+                  <Form.Control as="select">
+                    {projects.map((project, index) => (
+                      <option key={index} value={project.ProjectVersionArn}>
+                        {project.project}/{project.version}
+                      </option>
+                    ))}
+
+                    <option value="ALL" key={projects.length}>
+                      All available
+                    </option>
+                  </Form.Control>
+
+                  <FormGroup>
+                    <FormControl
+                      type="file"
+                      onChange={e => processImage(e.target.files[0])}
+                      id="image"
+                    />
+                  </FormGroup>
+                </Form>
+              )}
               {formState === "ready" && (
                 <Spinner animation="border" role="status">
                   <span className="sr-only">Loading...</span>

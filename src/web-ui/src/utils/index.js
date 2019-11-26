@@ -1,4 +1,4 @@
-export const mapResults = x => {
+export const mapResults = (data, type) => {
   const parseArn = arn => {
     const s = arn.split(":")[5].split("/");
     return [s[1], s[3]];
@@ -6,14 +6,15 @@ export const mapResults = x => {
 
   const result = [];
 
-  x.forEach(project =>
+  data.forEach(project =>
     project.ProjectVersionDescriptions.forEach(version => {
       const [projectName, versionName] = parseArn(version.ProjectVersionArn);
-      result.push({
-        project: projectName,
-        version: versionName,
-        details: version
-      });
+      if (!type || version.Status === type)
+        result.push({
+          project: projectName,
+          version: versionName,
+          details: version
+        });
     })
   );
 

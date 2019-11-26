@@ -38,7 +38,7 @@ export default ({ gateway }) => {
         >
           some project versions
         </a>{" "}
-        in a "RUNNING" state. Currently, these are the ones available in this
+        in a "RUNNING" state. Currently, these are all the project versions in this
         account:
       </p>
       <Table striped bordered size="sm" variant="dark" className="intro">
