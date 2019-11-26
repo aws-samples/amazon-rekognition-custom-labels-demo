@@ -18,7 +18,7 @@
 
 ### Architecture
 
-The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognition) for label recognition, [Amazon API Gateway](https://aws.amazon.com/api-gateway) and [Amazon Cognito](https://aws.amazon.com/cognito) for the API, and [Amazon S3](https://aws.amazon.com/s3), [AWS Amplify](https://aws.amazon.com/amplify), and [React](https://reactjs.org) for the front-end layer.
+The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognition) for label recognition, [Amazon Cognito](https://aws.amazon.com/cognito) for authenticating the Service Requests, and [Amazon CloudFront](https://aws.amazon.com/cloudfront), [Amazon S3](https://aws.amazon.com/s3), [AWS Amplify](https://aws.amazon.com/amplify), and [React](https://reactjs.org) for the front-end layer.
 
 <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
 
@@ -26,23 +26,17 @@ There are two ways to use the application:
 * the **"Image Mode"** allows to detect custom labels by uploading an Image
 * the **"Webcam Mode"** allows to detect custom labels by using a WebCam (the label detection happens every second)
 
-The diagram below represents the API calls performed by Amplify, which takes care of authenticating all the calls to the API Gateway using Cognito.
-
-> TODO: Update Flow Diagram
-
-<img src="docs/amazon-rekognition-2.png" alt="User flow" />
-
 #### The "Image Mode"
 
-After selecting an image from your local machine, Amplify makes a `POST /labels/detect` request to the API Gateway including the uploaded picture, then the API Gateway calls the `DetectLabels` action in Amazon Rekognition. To learn more about *DetectLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
+After selecting an image from your local machine, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
 
-> TODO: Update with Custom Labels
+> TODO: Update with correct link
 
 #### The "Webcam Mode"
 
-After clicking the "Start Rekognition" button, Amplify makes a `POST /labels/detect` request to the API Gateway including a snapshot from the webcam, then the API Gateway calls the `DetectLabels` action in Amazon Rekognition. Amplify makes another request with a new snapshot every second, unless the "Stop Rekognition" button is clicked again. To learn more about *DetectLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
+After clicking the "Start Rekognition" button, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. Amplify makes another request with a new snapshot every second, unless the "Stop Rekognition" button is clicked again. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
 
-> TODO: Update with Custom Labels
+> TODO: Update with correct link
 
 ### Usage
 
@@ -75,8 +69,9 @@ You are responsible for the cost of the AWS services used while running this sam
 1. You should see a screen titled "*Create Stack*" at the "*Specify template*" step. The fields specifying the CloudFormation template are pre-populated. Click the *Next* button at the bottom of the page.
 1. On the "*Specify stack details*" screen you may customize the following parameters of the CloudFormation stack:
    * **Stack Name:** (Default: CustomLabelsDemo) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
-   * **CollectionId:** (Default: RekogCustomLabelsDemo) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
-   * **CreateCloudFrontDistribution**  (Default: false) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes)
+   * **ResourcePrefix:** (Default: RekogCustomLabelsDemo) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
+   * **CreateCloudFrontDistribution**  (Default: true) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes).
+   * **ServiceOverride** (Default: *Empty*) Allows to test the Demo with a different Rekognition Base Url. It shouldn't be required for most of use-cases.
 
    When completed, click *Next*
 1. [Configure stack options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html) if desired, then click *Next*.
