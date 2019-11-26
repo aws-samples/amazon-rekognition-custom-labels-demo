@@ -69,3 +69,7 @@ th {
   height: 90%;
   overflow: scroll;
 }
+
+.intro {
+  text-align: left;
+}

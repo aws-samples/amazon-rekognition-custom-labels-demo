@@ -2,11 +2,11 @@ const mime = require("mime-types");
 const unzip = require("unzipper");
 
 const {
-  API_GATEWAY,
   COGNITO_IDENTITY_POOL,
   FROM_BUCKET,
   CREATE_CLOUDFRONT_DISTRIBUTION,
   REGION,
+  REKOGNITION_BASE_URL,
   TO_BUCKET,
   VERSION
 } = process.env;
@@ -62,7 +62,7 @@ module.exports = s3 => {
           Bucket: TO_BUCKET,
           Key: CONFIG_FILENAME,
           Body: `window.rekognitionSettings = ${JSON.stringify({
-            apiGateway: API_GATEWAY,
+            baseUrl: REKOGNITION_BASE_URL,
             cognitoIdentityPool: COGNITO_IDENTITY_POOL,
             region: REGION
           })};`
