@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Amazon Rekognition Custom Labels Demo (uksb-1q6fl3pi5)
 Transform: AWS::Serverless-2016-10-31
+
 Globals:
   Function:
     Runtime: nodejs12.x
@@ -17,18 +18,14 @@ Globals:
           - !Ref ServiceOverride
           - !Sub https://rekognition.${AWS::Region}.amazonaws.com
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: '0.1'
-  Api:
-    Cors:
-      AllowMethods: "'*'"
-      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-      AllowOrigin: "'*'"
+        VERSION: "0.1"
+
 Parameters:
   ResourcePrefix:
     Description: AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
     Type: String
     Default: RekogCustomLabelsDemo
-    AllowedPattern : ^[a-zA-Z0-9_]*$
+    AllowedPattern: ^[a-zA-Z0-9_]*$
   CreateCloudFrontDistribution:
     Description: Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level.
     Type: String
@@ -40,32 +37,37 @@ Parameters:
     Description: Allows to test the Demo with a different Rekognition Base Url. It shouldn't be required for most of use-cases.
     Type: String
     Default: ""
+
 Conditions:
-  WithCloudFront: !Equals [!Ref CreateCloudFrontDistribution, 'true']
-  WithServiceOverride: !Not [!Equals [!Ref ServiceOverride, '']]
+  WithCloudFront: !Equals [!Ref CreateCloudFrontDistribution, "true"]
+  WithServiceOverride: !Not [!Equals [!Ref ServiceOverride, ""]]
+
 Outputs:
   url:
-    Value: !If 
+    Value: !If
       - WithCloudFront
-      - !Sub 'https://${CloudFrontDistribution.DomainName}'
-      - !Sub 'https://${WebUIBucket.RegionalDomainName}/index.html'
-    Description: Engagement Meter URL
+      - !Sub "https://${CloudFrontDistribution.DomainName}"
+      - !Sub "https://${WebUIBucket.RegionalDomainName}/index.html"
+    Description: Custom Labels Demo Url
+
 Resources:
   SetupWebUI:
     Type: Custom::Setup
     Properties:
       ServiceToken: !GetAtt LambdaSetup.Arn
       Region: !Ref AWS::Region
+
   WebUIBucket:
     Type: AWS::S3::Bucket
     Properties:
       CorsConfiguration:
         CorsRules:
-        - AllowedHeaders: ['*']
-          AllowedMethods: [GET]
-          AllowedOrigins: ['*']
-          Id: !Sub ${ResourcePrefix}RekogCorsRule
-          MaxAge: 3600
+          - AllowedHeaders: ["*"]
+            AllowedMethods: [GET]
+            AllowedOrigins: ["*"]
+            Id: !Sub ${ResourcePrefix}RekogCorsRule
+            MaxAge: 3600
+
   WebUIBucketReadPolicy:
     Type: AWS::S3::BucketPolicy
     Condition: WithCloudFront
@@ -73,16 +75,18 @@ Resources:
       Bucket: !Ref WebUIBucket
       PolicyDocument:
         Statement:
-        - Action: s3:GetObject
-          Effect: Allow
-          Resource: !Sub arn:aws:s3:::${WebUIBucket}/*
-          Principal:
-            CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub arn:aws:s3:::${WebUIBucket}/*
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+
   CognitoIdentityPool:
     Type: AWS::Cognito::IdentityPool
     Properties:
       IdentityPoolName: !Sub ${ResourcePrefix}RekogIdentityPool
       AllowUnauthenticatedIdentities: true
+
   CognitoIdentityPoolRole:
     Type: AWS::Cognito::IdentityPoolRoleAttachment
     Properties:
@@ -90,6 +94,7 @@ Resources:
       Roles:
         authenticated: !GetAtt RekognitionInvokeRole.Arn
         unauthenticated: !GetAtt RekognitionInvokeRole.Arn
+
   RekognitionInvokeRole:
     Type: AWS::IAM::Role
     Properties:
@@ -104,6 +109,7 @@ Resources:
             Action:
               - sts:AssumeRole
               - sts:AssumeRoleWithWebIdentity
+
   CustomResourceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -120,15 +126,16 @@ Resources:
         - PolicyName: RekogCustomLabelsDemo-setup-S3-fc
           PolicyDocument:
             Statement:
-            - Effect: Allow
-              Action: 's3:*'
-              Resource: '*'
+              - Effect: Allow
+                Action: "s3:*"
+                Resource: "*"
         - PolicyName: RekogCustomLabelsDemo-cloudwatch-logs
           PolicyDocument:
             Statement:
-            - Effect: Allow
-              Action: 'logs:*'
-              Resource: 'arn:aws:logs:*:*:*'
+              - Effect: Allow
+                Action: "logs:*"
+                Resource: "arn:aws:logs:*:*:*"
+
   LambdaSetup:
     Type: AWS::Serverless::Function
     Properties:
@@ -137,31 +144,33 @@ Resources:
       CodeUri: ../backend/functions/setup/
       Description: Custom Lambda resource for the Amazon Rekognition Custom Labels Demo Cloudformation Stack
       Role: !GetAtt CustomResourceRole.Arn
+
   CloudFrontOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Condition: WithCloudFront
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Ref WebUIBucket
+
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Condition: WithCloudFront
-    Properties:       
+    Properties:
       DistributionConfig:
         Origins:
-        - DomainName: !GetAtt WebUIBucket.RegionalDomainName
-          Id: !Sub ${ResourcePrefix}-myS3Origin
-          S3OriginConfig:
-            OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
+          - DomainName: !GetAtt WebUIBucket.RegionalDomainName
+            Id: !Sub ${ResourcePrefix}-myS3Origin
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
         Enabled: true
         HttpVersion: http2
         Comment: The Distribution for the Rekognition Meter Web UI
         DefaultRootObject: index.html
         DefaultCacheBehavior:
           AllowedMethods:
-          - HEAD
-          - GET
-          - OPTIONS
+            - HEAD
+            - GET
+            - OPTIONS
           TargetOriginId: !Sub ${ResourcePrefix}-myS3Origin
           ForwardedValues:
             QueryString: false
