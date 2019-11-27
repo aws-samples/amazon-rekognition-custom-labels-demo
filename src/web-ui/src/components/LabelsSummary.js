@@ -92,12 +92,7 @@ export default ({
                         onMouseOver={() => highlight(index, color)}
                         onMouseOut={() => removeHighlight(index)}
                       >
-                        <td
-                          style={{
-                            color:
-                              label.boundingBoxes.length > 0 ? color : "#444444"
-                          }}
-                        >
+                        <td>
                           {label.name}
                           {showLabelBoundingBoxes &&
                             label.boundingBoxes.map((boundingBox, bbIndex) => (

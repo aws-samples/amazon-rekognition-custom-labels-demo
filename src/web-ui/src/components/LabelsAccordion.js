@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Accordion, Card, useAccordionToggle } from "react-bootstrap";
 
+const ArrowIcon = ({ type }) => (
+  <i className={`arrow ${type === "+" ? "right" : "down"}`} />
+);
+
 const CustomToggle = ({ children, open }) => {
   const [collapsed, setCollapsed] = useState(!open);
   const [icon, setIcon] = useState(!open ? "+" : "-");
@@ -13,7 +17,7 @@ const CustomToggle = ({ children, open }) => {
 
   return (
     <div onClick={toggle} variant="link">
-      {icon} {children}
+      <ArrowIcon type={icon} /> {children}
     </div>
   );
 };

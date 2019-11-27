@@ -9,7 +9,7 @@ export default ({ onChange, onMount, projects }) => {
 
   useEffect(() => {
     onMount(findDOMNode(selected.current).value);
-  }, [selected]);
+  }, [onMount, selected]);
 
   return (
     <div className="form-element">
