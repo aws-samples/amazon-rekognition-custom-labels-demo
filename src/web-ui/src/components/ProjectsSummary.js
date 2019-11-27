@@ -41,7 +41,7 @@ export default ({ gateway }) => {
         in a "RUNNING" state. Currently, these are all the project versions in this
         account:
       </p>
-      <Table striped bordered size="sm" variant="dark" className="intro">
+      <Table striped bordered className="intro">
         <thead>
           <tr>
             <td>Project</td>

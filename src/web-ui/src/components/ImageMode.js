@@ -5,28 +5,32 @@ import {
   Col,
   Container,
   Form,
-  FormControl,
   FormGroup,
   Row,
   Spinner
 } from "react-bootstrap";
 import { mapResults } from "../utils";
 
+import FileUpload from "./FileUpload";
 import LabelsSummary from "./LabelsSummary";
+import ProjectSelect from "./ProjectSelect";
 
 const validProjectVersionState = "RUNNING";
 
 export default ({ gateway }) => {
-  const [detectedLabels, setDetectedLabels] = useState([]);
+  const [apiResponse, setApiResponse] = useState(undefined);
+  const [detectedLabels, setDetectedLabels] = useState(undefined);
   const [errorDetails, setErrorDetails] = useState("");
   const [formState, setFormState] = useState("initial");
   const [image, setImage] = useState(undefined);
   const [imageCoordinates, setImageCoordinates] = useState({});
   const [projects, setProjects] = useState(undefined);
+  const [projectVersion, setProjectVersion] = useState(undefined);
 
   const imageContainer = useRef(undefined);
 
-  const resetSummary = () => setDetectedLabels([]) && setErrorDetails("");
+  const resetSummary = () =>
+    setDetectedLabels(undefined) && setErrorDetails("");
 
   const isValidImage = type =>
     ["data:image/jpeg;base64", "data:image/png;base64"].includes(type);
@@ -49,6 +53,11 @@ export default ({ gateway }) => {
     } catch (error) {
       setFormState("error");
     }
+  };
+
+  const tryFetchingLabels = value => {
+    setProjectVersion(value);
+    if (image) setFormState("ready");
   };
 
   const calculateImageCoordinates = () => {
@@ -84,9 +93,10 @@ export default ({ gateway }) => {
     if (formState === "ready") {
       calculateImageCoordinates();
       gateway
-        .detectLabels(image)
+        .detectCustomLabels(projectVersion, image)
         .then(response => {
-          setDetectedLabels(response.Labels);
+          setApiResponse(response);
+          setDetectedLabels(response.CustomLabels);
           setFormState("processed");
         })
         .catch(e => {
@@ -96,7 +106,7 @@ export default ({ gateway }) => {
     }
 
     return () => window.removeEventListener("scroll", scrollHandler);
-  }, [formState, gateway, image, scrollHandler]);
+  }, [formState, gateway, image, projectVersion, scrollHandler]);
 
   return (
     <Row>
@@ -125,23 +135,15 @@ export default ({ gateway }) => {
             <Col md={4} sm={6} className="scrollable-panel">
               {projects && projects.length > 0 && (
                 <Form>
-                  <Form.Control as="select">
-                    {projects.map((project, index) => (
-                      <option key={index} value={project.ProjectVersionArn}>
-                        {project.project}/{project.version}
-                      </option>
-                    ))}
-
-                    <option value="ALL" key={projects.length}>
-                      All available
-                    </option>
-                  </Form.Control>
-
+                  <ProjectSelect
+                    onChange={tryFetchingLabels}
+                    onMount={setProjectVersion}
+                    projects={projects}
+                  />
                   <FormGroup>
-                    <FormControl
-                      type="file"
+                    <FileUpload
+                      id="asd"
                       onChange={e => processImage(e.target.files[0])}
-                      id="image"
                     />
                   </FormGroup>
                 </Form>
@@ -151,11 +153,16 @@ export default ({ gateway }) => {
                   <span className="sr-only">Loading...</span>
                 </Spinner>
               )}
-              <LabelsSummary
-                detectedLabels={detectedLabels}
-                showLabelBoundingBoxes={true}
-                containerCoordinates={imageCoordinates}
-              />
+              {formState !== "ready" && (
+                <LabelsSummary
+                  apiResponse={apiResponse}
+                  containerCoordinates={imageCoordinates}
+                  detectedLabels={detectedLabels}
+                  image={image}
+                  projectVersionArn={projectVersion}
+                  showLabelBoundingBoxes={true}
+                />
+              )}
             </Col>
           </Row>
         </Container>

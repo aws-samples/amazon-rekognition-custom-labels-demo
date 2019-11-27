@@ -15,7 +15,7 @@ export default () => (
     <Container>
       <SettingsHelp show={!window.rekognitionSettings} />
       <Tabs
-        defaultActiveKey={1}
+        defaultActiveKey={2}
         transition={false}
         id="noanim-tab-example"
         unmountOnExit={true}

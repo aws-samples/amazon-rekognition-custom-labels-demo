@@ -3,13 +3,11 @@ body,
 .root {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: HelveticaNeue, Helvetica Neue, Helvetica;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #202020;
-  color: #fff;
+  background-color: #f6f6f6;
+  color: #3f3f3f;
   font-size: 16px;
   text-align: center;
   height: 100%;
@@ -28,10 +26,6 @@ body,
   margin-bottom: 0;
 }
 
-th {
-  text-align: center;
-}
-
 .table td,
 .table th {
   padding: 0.5rem;
@@ -39,6 +33,7 @@ th {
 
 .tab-content {
   padding-top: 20px;
+  background-color: #fff;
 }
 
 .nav-pills .nav-link.active,
@@ -61,8 +56,8 @@ th {
 }
 
 .table {
-  font-size: 12px;
-  color: #fff;
+  font-size: 16px;
+  color: #444444;
 }
 
 .scrollable-panel {
@@ -72,4 +67,150 @@ th {
 
 .intro {
   text-align: left;
+  width: 96%;
+  margin: 2%;
+}
+
+.form-element {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: HelveticaNeue-Light, Helvetica Neue, Helvetica;
+  font-size: 14px;
+  padding-left: 5px;
+  margin-bottom: 7px;
+}
+
+.form-element .form-prompt {
+  font-family: HelveticaNeue-Medium, Helvetica Neue, Helvetica;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.form-element .form-prompt .form-instructions {
+  color: rgb(146, 146, 146);
+  line-height: 1.3em;
+  padding-bottom: 1px;
+  font-size: 10px;
+  letter-spacing: 0px;
+  font-weight: 100;
+  max-width: 210px;
+  text-align: left;
+}
+
+.form-element .upload-prompt-row {
+  display: flex;
+}
+
+.awsui-button.awsui-button-variant-primary {
+  background-color: #1166bb;
+  background-image: linear-gradient(#2d8cec, #1166bb);
+  border: 1px solid #0b4075;
+  border-top-color: #1166bb;
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+}
+
+.form-element .upload-button {
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  margin-bottom: 5px;
+}
+
+.awsui-button {
+  border-radius: 4px;
+  color: #444444;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 21px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 4px 14px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-appearance: none;
+  white-space: nowrap;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-element .upload-button .upload {
+  padding-left: 5px;
+}
+
+.form-element input[type="file"] {
+  display: none;
+}
+
+.upload.awsui-icon-light::before {
+  background-image: url(data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%222048%22%20height%3D%222048%22%20viewBox%3D%220%200%202048%202048%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D%22%23FFF%22%20%20d%3D%22M1472%201600q0-26-19-45t-45-19-45%2019-19%2045%2019%2045%2045%2019%2045-19%2019-45zm256%200q0-26-19-45t-45-19-45%2019-19%2045%2019%2045%2045%2019%2045-19%2019-45zm128-224v320q0%2040-28%2068t-68%2028H288q-40%200-68-28t-28-68v-320q0-40%2028-68t68-28h427q21%2056%2070.5%2092t110.5%2036h256q61%200%20110.5-36t70.5-92h427q40%200%2068%2028t28%2068zm-325-648q-17%2040-59%2040h-256v448q0%2026-19%2045t-45%2019H896q-26%200-45-19t-19-45V768H576q-42%200-59-40-17-39%2014-69l448-448q18-19%2045-19t45%2019l448%20448q31%2030%2014%2069z%22%2F%3E%3C%2Fsvg%3E);
+}
+
+.awsui-icon:empty::before {
+  margin-right: 0;
+}
+
+.awsui-icon::before {
+  content: "";
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.form-element .upload-button .button-text {
+  padding: 2px 8px 2px 8px;
+}
+
+.awsui-button.awsui-button-variant-primary:hover:not(.awsui-button-disabled) {
+  background-image: linear-gradient(#1166bb, #0d4d8c);
+}
+
+.form-control {
+  width: 95%;
+}
+
+.labels-accordion {
+  width: 95%;
+  text-align: left;
+}
+
+.labels-accordion .card-header {
+  padding: 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 40px;
+  border-bottom: 1px solid #dadada;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.labels-accordion .card-header,
+.labels-accordion .card {
+  background-color: transparent;
+  border: 0;
+}
+
+.prettify-json {
+  white-space: pre;
+  word-wrap: break-word;
+  font-family: HelveticaNeue, "Helvetica Neue", Helvetica;
+  font-size: 12px;
+  color: #494949;
+  letter-spacing: 1.29px;
+  line-height: 16px;
+  text-align: left;
+  padding: 10px 0;
+  margin: 0 0 25px 0;
+  overflow: scroll;
 }
