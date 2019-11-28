@@ -17,7 +17,7 @@
     "tag": "git tag `npm run echo-version --silent`",
     "test": "cfn-lint templates/template.yaml && npm run webui-test",
     "webui-build": "cd src/web-ui && npm run build",
-    "webui-package": "cd src/web-ui/build && zip -r ../../../frontend.zip .",
+    "webui-package": "cd src/web-ui/build && zip -r ../../../frontend.zip . -x *settings.js",
     "webui-test": "cd src/web-ui && npm t",
     "zip": "zip -r `npm run echo-version --silent`.zip -@ < ci/include.lst"
   },
