@@ -75,7 +75,8 @@ You are responsible for the cost of the AWS services used while running this sam
 1. [Configure stack options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html) if desired, then click *Next*.
 1. On the review you screen, you must check the boxes for:
    * "*I acknowledge that AWS CloudFormation might create IAM resources*" 
-   * "*I acknowledge that AWS CloudFormation might create IAM resources with custom names*" 
+   * "*I acknowledge that AWS CloudFormation might create IAM resources with custom names*"
+   * "*I acknowledge that AWS CloudFormation might require the following capability: CAPABILITY_AUTO_EXPAND*"
 
    These are required to allow CloudFormation to create a Role to allow access to resources needed by the stack and name the resources in a dynamic way.
 1. Click *Create Change Set* 
