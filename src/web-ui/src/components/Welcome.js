@@ -135,7 +135,7 @@ export default () => (
         2
       )}
     </div>
-    <h4>3. Create a new Custom Labels Project</h4>
+    <h4>3. Create a new Custom Labels Project Version</h4>
     The "CreateProjectVersion" command is for creating a new version of a model
     and begin training. Models are managed as part of an Amazon Rekognition
     Custom Labels project. <br /> You can specify one training dataset and one
