@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const REGION = window.rekognitionSettings.region;
 
@@ -13,13 +13,19 @@ export default () => (
     high-quality labeled images, customers can now use Amazon Rekognition Custom
     Labels to achieve state-of-the-art performance for their unique image
     analysis needs.
-    <br />
-    <br />
     <h2>Getting started</h2>
-    The Rekognition Custom Labels console provides a visual interface to make
-    labeling your images fast and simple. The interface allows you to apply a
-    label to the entire image or to identify and label specific objects in
-    images using bounding boxes with a simple click-and-drag interface.
+    The{" "}
+    <a
+      href="https://console.aws.amazon.com/rekognition"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Rekognition Custom Labels console
+    </a>{" "}
+    provides a visual interface to make labeling your images fast and simple.
+    The interface allows you to apply a label to the entire image or to identify
+    and label specific objects in images using bounding boxes with a simple
+    click-and-drag interface.
     <br />
     <br />
     Alternately, if you have a large data set, you can use{" "}
@@ -31,8 +37,6 @@ export default () => (
       Amazon SageMaker Ground Truth
     </a>{" "}
     to efficiently label your images at scale.
-    <br />
-    <br />
     <h4>1. Setup S3 bucket policies for Rekognition</h4>
     Amazon Rekognition will need to be able to read and write to Amazon S3
     during the training. This is an example policy for buckets in need of read
@@ -111,7 +115,7 @@ export default () => (
     operations (training, evaluation and detection). <br /> <br />
     <i>
       This operation requires permissions to perform the
-      rekognition:CreateProject action.{" "}
+      rekognition:CreateProject action.
     </i>
     <br />
     <br />

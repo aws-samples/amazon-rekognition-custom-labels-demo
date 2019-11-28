@@ -122,17 +122,30 @@ export default ({ gateway }) => {
             <a href={window.location.href}>Retry</a>.
           </Alert>
           <Row>
+            <Col
+              md={12}
+              sm={6}
+              style={{
+                textAlign: "left",
+                marginLeft: "20px",
+                paddingBottom: "40px"
+              }}
+            >
+              <h2>
+                Object and scene detection with Amazon Rekognition Custom Labels
+              </h2>
+            </Col>
             <Col md={8} sm={6}>
               {image && (
                 <img
                   alt="The uploaded content"
                   ref={x => (imageContainer.current = x)}
                   src={`data:image/png;base64, ${image}`}
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", margin: "10px" }}
                 />
               )}
             </Col>
-            <Col md={4} sm={6} className="scrollable-panel">
+            <Col md={4} sm={6}>
               {projects && projects.length > 0 && (
                 <Form>
                   <ProjectSelect

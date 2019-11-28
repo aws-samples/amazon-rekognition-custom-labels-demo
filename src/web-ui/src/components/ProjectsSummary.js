@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { mapResults } from "../utils";
 
-const REGION = window.rekognitionSettings.region;
-
 export default ({ gateway }) => {
   const [projects, setProjects] = useState([]);
 

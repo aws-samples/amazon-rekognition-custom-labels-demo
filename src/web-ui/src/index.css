@@ -169,7 +169,7 @@ body,
 }
 
 .form-control {
-  width: 95%;
+  width: auto;
 }
 
 .labels-accordion {
@@ -237,6 +237,10 @@ pre {
 
 .intro .prettify-json {
   margin: 10px 0 10px 0;
+}
+
+h2 {
+  margin: 30px 0 10px 0;
 }
 
 h4 {
