@@ -11,8 +11,7 @@ exports.handler = (event, context, callback) => {
 
   if (eventType === "Create") {
     console.log("Creating resources");
-    actions = [writeSettings()];
-    // actions = [copyFiles(), writeSettings()];
+    actions = [copyFiles(), writeSettings()];
   } else if (eventType === "Delete") {
     console.log("Deleting resources");
     actions = [removeFiles()];
