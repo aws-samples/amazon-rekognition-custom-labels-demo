@@ -1,6 +1,10 @@
 ## Amazon Rekognition Custom Labels Demo
 
-> TODO: Description
+Amazon Rekognition Custom Labels is a feature of Amazon Rekognition that enables customers to build their own specialized machine learning (ML) based image analysis capabilities to detect unique objects and scenes integral to their specific use case. 
+
+Instead of having to train a model from scratch, which requires specialized machine learning expertise and millions of high-quality labeled images, customers can use Amazon Rekognition Custom Labels to achieve state-of-the-art performance for their unique image analysis needs.
+
+This demo allows to test Custom Labels with models trained by Amazon Rekognition.
 
 [![Build Status](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo.svg?branch=master)](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo)
 
@@ -22,19 +26,8 @@ The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognit
 
 <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
 
-There are two ways to use the application:
-* the **"Image Mode"** allows to detect custom labels by uploading an Image
-* the **"Webcam Mode"** allows to detect custom labels by using a WebCam (the label detection happens every second)
-
-#### The "Image Mode"
 
 After selecting an image from your local machine, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
-
-> TODO: Update with correct link
-
-#### The "Webcam Mode"
-
-After clicking the "Start Rekognition" button, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. Amplify makes another request with a new snapshot every second, unless the "Stop Rekognition" button is clicked again. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
 
 > TODO: Update with correct link
 
@@ -44,7 +37,7 @@ After clicking the "Start Rekognition" button, Amplify calls the `DetectCustomLa
 
 To deploy the sample application you will require an AWS account. If you don’t already have an AWS account, create one at <https://aws.amazon.com> by following the on-screen instructions. Your access to the AWS account must have IAM permissions to launch AWS CloudFormation templates that create IAM roles.
 
-To use the sample application you will require a [modern browser](https://caniuse.com/#feat=stream) and a webcam.
+To use the sample application you will require a [modern browser](https://caniuse.com/#search=FileReader%20API).
 
 #### Deployment
 
@@ -68,9 +61,9 @@ You are responsible for the cost of the AWS services used while running this sam
 2. If prompted, login using your AWS account credentials.
 1. You should see a screen titled "*Create Stack*" at the "*Specify template*" step. The fields specifying the CloudFormation template are pre-populated. Click the *Next* button at the bottom of the page.
 1. On the "*Specify stack details*" screen you may customize the following parameters of the CloudFormation stack:
-   * **Stack Name:** (Default: CustomLabelsDemo) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
-   * **ResourcePrefix:** (Default: RekogCustomLabelsDemo) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
-   * **CreateCloudFrontDistribution**  (Default: true) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes).
+   * **Stack Name:** (Default: *CustomLabelsDemo*) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
+   * **ResourcePrefix:** (Default: *RekogCustomLabelsDemo*) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
+   * **CreateCloudFrontDistribution**  (Default: *true*) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes).
    * **ServiceOverride** (Default: *Empty*) Allows to test the Demo with a different Rekognition Base Url. It shouldn't be required for most of use-cases.
 
    When completed, click *Next*
@@ -91,9 +84,7 @@ You are responsible for the cost of the AWS services used while running this sam
 
 The application is accessed using a web browser. The address is the *url* output from the CloudFormation stack created during the Deployment steps.
 
-* When accessing the application, the browser will ask you the permission for using your camera. You will need to click "*Allow*" for the application to work.
-* Click "*Image Mode*" and then upload a picture (JPG and PNG formats are accepted) if you wish to detect the custom labels from a picture.
-* Click "*Webcam Mode*" and then click "*Start Rekognition*" if you wish to detect the custom labels from snapshots taken from your webcam.
+After accessing the web application, all the Rekognition Projects will be shown. After having some Rekognition Projects trained and running, it will be possible to upload a picture (JPG and PNG formats are accepted) to detect the custom labels from a picture.
 
 ### Remove the application
 

@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import ImageMode from "./components/ImageMode";
 import ProjectsSummary from "./components/ProjectsSummary";
 import SettingsHelp from "./components/SettingsHelp";
-import WebCamMode from "./components/WebCamMode";
 
 import gateway from "./utils/gateway";
 
@@ -15,7 +14,7 @@ export default () => (
     <Container>
       <SettingsHelp show={!window.rekognitionSettings} />
       <Tabs
-        defaultActiveKey={2}
+        defaultActiveKey={1}
         transition={false}
         id="noanim-tab-example"
         unmountOnExit={true}
@@ -24,11 +23,8 @@ export default () => (
         <Tab eventKey={1} title="Welcome">
           <ProjectsSummary gateway={gateway} />
         </Tab>
-        <Tab eventKey={2} title="Image Mode">
+        <Tab eventKey={2} title="Test your models">
           <ImageMode gateway={gateway} />
-        </Tab>
-        <Tab eventKey={3} title="Webcam Mode">
-          <WebCamMode gateway={gateway} />
         </Tab>
       </Tabs>
     </Container>
