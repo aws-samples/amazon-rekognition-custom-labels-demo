@@ -10,7 +10,6 @@ body,
   color: #3f3f3f;
   font-size: 16px;
   text-align: center;
-  height: 100%;
 }
 
 #root,
@@ -20,7 +19,6 @@ body,
 .tab-pane,
 .row,
 .h100 {
-  height: 100%;
   padding: 0;
   margin-top: 0;
   margin-bottom: 0;
@@ -32,7 +30,7 @@ body,
 }
 
 .tab-content {
-  padding-top: 20px;
+  padding: 20px 0;
   background-color: #fff;
 }
 
@@ -58,11 +56,8 @@ body,
 .table {
   font-size: 16px;
   color: #444444;
-}
-
-.scrollable-panel {
-  height: 90%;
-  overflow: scroll;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .intro {
@@ -210,8 +205,9 @@ body,
   letter-spacing: 1.29px;
   line-height: 16px;
   text-align: left;
-  padding: 10px 0;
+  padding: 6px;
   margin: 0 0 25px 0;
+  background-color: #f6f6f6;
   overflow: scroll;
 }
 
@@ -231,4 +227,18 @@ i.arrow {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+pre {
+  margin: 10px 0 10px 0;
+  background-color: #f6f6f6;
+  padding: 6px;
+}
+
+.intro .prettify-json {
+  margin: 10px 0 10px 0;
+}
+
+h4 {
+  margin: 20px 0 10px 0;
 }

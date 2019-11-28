@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import ImageMode from "./components/ImageMode";
 import ProjectsSummary from "./components/ProjectsSummary";
 import SettingsHelp from "./components/SettingsHelp";
+import Welcome from "./components/Welcome";
 
 import gateway from "./utils/gateway";
 
@@ -21,9 +22,12 @@ export default () => (
         variant="pills"
       >
         <Tab eventKey={1} title="Welcome">
+          <Welcome />
+        </Tab>
+        <Tab eventKey={2} title="Projects Summary">
           <ProjectsSummary gateway={gateway} />
         </Tab>
-        <Tab eventKey={2} title="Test your models">
+        <Tab eventKey={3} title="Test your models">
           <ImageMode gateway={gateway} />
         </Tab>
       </Tabs>

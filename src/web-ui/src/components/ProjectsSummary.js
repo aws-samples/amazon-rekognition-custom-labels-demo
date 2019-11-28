@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { mapResults } from "../utils";
 
+const REGION = window.rekognitionSettings.region;
+
 export default ({ gateway }) => {
   const [projects, setProjects] = useState([]);
 
@@ -18,29 +20,18 @@ export default ({ gateway }) => {
   }, [gateway]);
 
   return (
-    <>
-      <p className="intro">
-        Amazon Rekognition Custom Labels is a new feature of Amazon Rekognition
-        that enables customers to build their own specialized machine learning
-        (ML) based image analysis capabilities to detect unique objects and
-        scenes integral to their specific use case. Instead of having to train a
-        model from scratch, which requires specialized machine learning
-        expertise and millions of high-quality labeled images, customers can now
-        use Amazon Rekognition Custom Labels to achieve state-of-the-art
-        performance for their unique image analysis needs.
-        <br />
-        <br />
-        To use the demo, you need{" "}
-        <a
-          href="https://aws.amazon.com/rekognition/custom-labels-features/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          some project versions
-        </a>{" "}
-        in a "RUNNING" state. Currently, these are all the project versions in this
-        account:
-      </p>
+    <div className="intro">
+      <h2>Amazon Rekognition Custom Labels Projects</h2>
+      To use the demo, you need{" "}
+      <a
+        href="https://aws.amazon.com/rekognition/custom-labels-features/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        some project versions
+      </a>{" "}
+      in a "RUNNING" state. Currently, these are all the project versions in
+      this account:
       <Table striped bordered className="intro">
         <thead>
           <tr>
@@ -59,6 +50,6 @@ export default ({ gateway }) => {
           ))}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 };
