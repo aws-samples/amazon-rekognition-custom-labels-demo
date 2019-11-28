@@ -38,8 +38,7 @@ module.exports = s3 => {
             })
           )
         )
-        .then(ps => Promise.all(ps))
-        .then(() => console.log("Directory unzipped to S3")),
+        .then(ps => Promise.all(ps)),
 
     removeFiles: () =>
       listFiles({
