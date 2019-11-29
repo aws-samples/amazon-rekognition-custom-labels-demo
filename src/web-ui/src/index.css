@@ -86,6 +86,7 @@ body,
   letter-spacing: 0.6px;
   margin-bottom: 10px;
   text-align: left;
+  font-weight: 600;
 }
 
 .form-element .form-prompt .form-instructions {
@@ -94,7 +95,7 @@ body,
   padding-bottom: 1px;
   font-size: 10px;
   letter-spacing: 0px;
-  font-weight: 100;
+  font-weight: 600;
   max-width: 210px;
   text-align: left;
 }
