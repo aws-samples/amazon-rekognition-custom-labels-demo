@@ -128,7 +128,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action: "s3:*"
-                Resource: "*"
+                Resource: !GetAtt WebUIBucket.Arn
         - PolicyName: RekogCustomLabelsDemo-cloudwatch-logs
           PolicyDocument:
             Statement:
