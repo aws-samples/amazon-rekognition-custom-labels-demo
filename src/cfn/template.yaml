@@ -127,8 +127,14 @@ Resources:
           PolicyDocument:
             Statement:
               - Effect: Allow
-                Action: "s3:*"
-                Resource: "*"
+                Action: 
+                  - "s3:DeleteObject"
+                  - "s3:ListOBucket"
+                  - "s3:PutObject"
+                Resource: !GetAtt WebUIBucket.Arn
+              - Effect: Allow
+                Action: "s3:GetObject"
+                Resource: "arn:aws:s3:*:*:solution-builders*"
         - PolicyName: RekogCustomLabelsDemo-cloudwatch-logs
           PolicyDocument:
             Statement:
@@ -164,7 +170,7 @@ Resources:
               OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
         Enabled: true
         HttpVersion: http2
-        Comment: The Distribution for the Rekognition Meter Web UI
+        Comment: The Distribution for the Rekognition Custom Label Demo
         DefaultRootObject: index.html
         DefaultCacheBehavior:
           AllowedMethods:
