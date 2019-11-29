@@ -127,14 +127,8 @@ Resources:
           PolicyDocument:
             Statement:
               - Effect: Allow
-                Action: 
-                  - "s3:DeleteObject"
-                  - "s3:ListOBucket"
-                  - "s3:PutObject"
-                Resource: !GetAtt WebUIBucket.Arn
-              - Effect: Allow
-                Action: "s3:GetObject"
-                Resource: "arn:aws:s3:*:*:solution-builders*"
+                Action: "s3:*"
+                Resource: "*"
         - PolicyName: RekogCustomLabelsDemo-cloudwatch-logs
           PolicyDocument:
             Statement:
