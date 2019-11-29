@@ -30,7 +30,7 @@ body,
 }
 
 .tab-content {
-  padding: 20px 0;
+  padding: 20px;
   background-color: #fff;
 }
 
@@ -64,6 +64,10 @@ body,
   text-align: left;
   width: 96%;
   margin: 2%;
+}
+
+.intro .prettify-json {
+  margin: 10px 0 10px 0;
 }
 
 .form-element {
@@ -235,14 +239,44 @@ pre {
   padding: 6px;
 }
 
-.intro .prettify-json {
-  margin: 10px 0 10px 0;
-}
-
 h2 {
   margin: 30px 0 10px 0;
 }
 
 h4 {
   margin: 20px 0 10px 0;
+}
+
+.navbar-nav button {
+  margin: 0 5px;
+}
+
+.powered {
+  color: rgba(69, 69, 69, 0.47);
+  font-style: italic;
+}
+
+.projects {
+  width: 100%;
+  text-align: center;
+}
+
+.projects .card {
+  margin: 30px;
+  display: inline-block;
+  min-width: 50%;
+  text-align: left;
+}
+
+.projects .card button {
+  margin: 0;
+  padding: 0;
+  vertical-align: inherit;
+}
+
+.projects ul,
+.projects li {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
 }

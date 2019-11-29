@@ -1,36 +1,46 @@
-import React from "react";
-import { Container, Tab, Tabs } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 
 import Header from "./components/Header";
 import ImageMode from "./components/ImageMode";
 import ProjectsSummary from "./components/ProjectsSummary";
 import SettingsHelp from "./components/SettingsHelp";
-import Welcome from "./components/Welcome";
+import Help from "./components/Help";
 
 import gateway from "./utils/gateway";
 
-export default () => (
-  <div className="App">
-    <Header />
-    <Container>
-      <SettingsHelp show={!window.rekognitionSettings} />
-      <Tabs
-        defaultActiveKey={1}
-        transition={false}
-        id="noanim-tab-example"
-        unmountOnExit={true}
-        variant="pills"
-      >
-        <Tab eventKey={1} title="Welcome">
-          <Welcome />
-        </Tab>
-        <Tab eventKey={2} title="Projects Summary">
-          <ProjectsSummary gateway={gateway} />
-        </Tab>
-        <Tab eventKey={3} title="Test your models">
-          <ImageMode gateway={gateway} />
-        </Tab>
-      </Tabs>
-    </Container>
-  </div>
-);
+export default () => {
+  const [currentPage, setCurrentPage] = useState("projects");
+  const [selectedProjectVersion, setSelectedProjectVersion] = useState(
+    undefined
+  );
+
+  const onHelp = () => setCurrentPage("help");
+  const loadProjectList = () => setCurrentPage("projects");
+  const loadProjectVersion = projectVersionArn => {
+    setSelectedProjectVersion(projectVersionArn);
+    setCurrentPage("image");
+  };
+
+  return (
+    <div className="App">
+      <Header onHelp={onHelp} loadProjectList={loadProjectList} />
+      <Container>
+        <SettingsHelp show={!window.rekognitionSettings} />
+        {currentPage === "projects" && (
+          <ProjectsSummary
+            gateway={gateway}
+            onVersionClick={loadProjectVersion}
+          />
+        )}
+        {currentPage === "help" && <Help />}
+        {currentPage === "image" && (
+          <ImageMode
+            gateway={gateway}
+            projectVersionArn={selectedProjectVersion}
+          />
+        )}
+      </Container>
+    </div>
+  );
+};

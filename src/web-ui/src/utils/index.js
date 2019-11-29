@@ -4,22 +4,20 @@ export const mapResults = (data, type) => {
     return [s[1], s[3]];
   };
 
-  const result = [];
+  const result = {};
 
   data.forEach(project =>
     project.ProjectVersionDescriptions.forEach(version => {
       const [projectName, versionName] = parseArn(version.ProjectVersionArn);
-      if (!type || version.Status === type)
-        result.push({
-          project: projectName,
+      if (!type || version.Status === type) {
+        result[projectName] = result[projectName] || [];
+        result[projectName].unshift({
           version: versionName,
           details: version
         });
+      }
     })
   );
 
-  return result.sort((a, b) => {
-    const s = x => `${x.project}/${x.details.CreationTimestamp}`;
-    return s(a) > s(b) ? 1 : s(a) < s(b) ? -1 : 0;
-  });
+  return result;
 };

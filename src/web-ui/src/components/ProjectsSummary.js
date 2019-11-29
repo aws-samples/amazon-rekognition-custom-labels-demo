@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { mapResults } from "../utils";
 
-export default ({ gateway }) => {
+export default ({ gateway, onVersionClick }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -18,36 +18,38 @@ export default ({ gateway }) => {
   }, [gateway]);
 
   return (
-    <div className="intro">
-      <h2>Amazon Rekognition Custom Labels Projects</h2>
-      To use the demo, you need{" "}
-      <a
-        href="https://aws.amazon.com/rekognition/custom-labels-features/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        some project versions
-      </a>{" "}
-      in a "RUNNING" state. Currently, these are all the project versions in
-      this account:
-      <Table striped bordered className="intro">
-        <thead>
-          <tr>
-            <td>Project</td>
-            <td>Project Version</td>
-            <td>State</td>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map((project, index) => (
-            <tr key={index}>
-              <td>{project.project}</td>
-              <td>{project.version}</td>
-              <td>{project.details.Status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+    <div className="projects tab-content">
+      <div className="logo">
+        <img src="/cllogo.png" alt="Amazon Rekognition Custom Labels Logo" />
+      </div>
+      <h2>Amazon Rekognition Custom Labels Demo</h2>
+      <div className="powered">powered by Amazon Rekognition</div>
+      {Object.keys(projects).map((projectName, index) => (
+        <Card key={index}>
+          <Card.Header>{projectName}</Card.Header>
+          <Card.Body>
+            <ul>
+              {projects[projectName].map((version, index) => (
+                <li key={`v-${index}`}>
+                  {version.details.Status === "RUNNING" ? (
+                    <Button
+                      variant="link"
+                      onClick={() =>
+                        onVersionClick(version.details.ProjectVersionArn)
+                      }
+                    >
+                      {version.version}
+                    </Button>
+                  ) : (
+                    version.version
+                  )}{" "}
+                  ({version.details.Status})<br />
+                </li>
+              ))}
+            </ul>
+          </Card.Body>
+        </Card>
+      ))}
     </div>
   );
 };

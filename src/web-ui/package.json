@@ -7,10 +7,10 @@
     "react": "16.9.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "16.9.0",
-    "react-scripts": "3.1.2",
-    "react-webcam": "1.0.4"
+    "react-scripts": "3.1.2"
   },
   "scripts": {
+    "dev": "react-scripts test",
     "start": "export HTTPS=true && react-scripts start",
     "build": "react-scripts build",
     "test": "export CI=true && react-scripts test",

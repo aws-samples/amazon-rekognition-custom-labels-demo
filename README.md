@@ -179,7 +179,7 @@ Output:
 
 #### 3. Create a new Custom Labels Project Version
 
-The "*CreateProjectVersion*" command is for creating a new version of a model and begin training. Models are managed as part of an Amazon Rekognition Custom Labels project.
+The "*CreateProjectVersion*" action is for creating a new version of a model and begin training. Models are managed as part of an Amazon Rekognition Custom Labels project.
 You can specify one training dataset and one testing dataset.
 Training takes a while to complete, after that its status will transit to "*TRAINING_COMPLETE*" (to check the current state of the model, navigate to the "*Project Summary*" tab of the demo). When on this stage, the model will be ready to be started.
 
@@ -203,7 +203,7 @@ Output:
 
 #### 4. Start the model
 
-The "*StartProjectVersion*" command allows to start running a version of a model.
+The "*StartProjectVersion*" action allows to start running a version of a model.
 Starting a model takes a while to complete, after that its status will transit to "*RUNNING*" (to check the current state of the model, navigate to the "Project Summary" tab of the demo).
 Once the model is running, you can detect custom labels in new images by navigating to the "T*est your models*" tab of the demo.
 
@@ -230,7 +230,7 @@ Output:
 
 Stops a running model. The operation might take a while to complete.
 
-*This operation requires permissions to perform the rekognition:StartProjectVersion action.*
+*This operation requires permissions to perform the rekognition:StopProjectVersion action.*
 
 If you are using the AWS CLI, run:
 ```sh

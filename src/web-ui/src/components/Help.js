@@ -3,7 +3,7 @@ import React from "react";
 const REGION = window.rekognitionSettings.region;
 
 export default () => (
-  <div className="intro">
+  <div className="intro tab-content">
     <h2>Amazon Rekognition Custom Labels</h2>
     Amazon Rekognition Custom Labels is a new feature of Amazon Rekognition that
     enables customers to build their own specialized machine learning (ML) based
@@ -136,7 +136,7 @@ export default () => (
       )}
     </div>
     <h4>3. Create a new Custom Labels Project Version</h4>
-    The "CreateProjectVersion" command is for creating a new version of a model
+    The "CreateProjectVersion" action is for creating a new version of a model
     and begin training. Models are managed as part of an Amazon Rekognition
     Custom Labels project. <br /> You can specify one training dataset and one
     testing dataset.
@@ -205,7 +205,7 @@ export default () => (
       )}
     </div>
     <h4>4. Start the model</h4>
-    The "StartProjectVersion" command allows to start running a version of a
+    The "StartProjectVersion" action allows to start running a version of a
     model. <br />
     Starting a model takes a while to complete, after that its status will
     transit to "RUNNING" (to check the current state of the model, navigate to
@@ -256,7 +256,7 @@ export default () => (
     <br />
     <i>
       This operation requires permissions to perform the
-      rekognition:StartProjectVersion action.
+      rekognition:StopProjectVersion action.
     </i>
     <br />
     <br />

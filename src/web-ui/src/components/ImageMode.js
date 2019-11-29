@@ -17,7 +17,7 @@ import ProjectSelect from "./ProjectSelect";
 
 const validProjectVersionState = "RUNNING";
 
-export default ({ gateway }) => {
+export default ({ gateway, projectVersionArn }) => {
   const [apiResponse, setApiResponse] = useState(undefined);
   const [detectedLabels, setDetectedLabels] = useState(undefined);
   const [errorDetails, setErrorDetails] = useState("");
@@ -25,7 +25,7 @@ export default ({ gateway }) => {
   const [image, setImage] = useState(undefined);
   const [imageCoordinates, setImageCoordinates] = useState({});
   const [projects, setProjects] = useState(undefined);
-  const [projectVersion, setProjectVersion] = useState(undefined);
+  const [projectVersion, setProjectVersion] = useState(projectVersionArn);
 
   const imageContainer = useRef(undefined);
 
@@ -109,7 +109,7 @@ export default ({ gateway }) => {
   }, [formState, gateway, image, projectVersion, scrollHandler]);
 
   return (
-    <Row>
+    <Row className="tab-content">
       <Col md={12} sm={6} className="h100">
         <Container>
           <Alert
@@ -146,12 +146,13 @@ export default ({ gateway }) => {
               )}
             </Col>
             <Col md={4} sm={6}>
-              {projects && projects.length > 0 && (
+              {projects && Object.keys(projects).length > 0 && (
                 <Form>
                   <ProjectSelect
                     onChange={tryFetchingLabels}
                     onMount={setProjectVersion}
                     projects={projects}
+                    preSelected={projectVersion}
                   />
                   <FormGroup>
                     <FileUpload
