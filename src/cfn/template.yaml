@@ -18,7 +18,7 @@ Globals:
           - !Ref ServiceOverride
           - !Sub https://rekognition.${AWS::Region}.amazonaws.com
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "0.3"
+        VERSION: "0.4"
 
 Parameters:
   ResourcePrefix:
