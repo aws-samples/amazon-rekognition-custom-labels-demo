@@ -69,67 +69,71 @@ export default ({
 
   return (
     <div>
-      {detectedLabels && detectedLabels.length === 0 && (
-        <span>No custom labels detected for the given image.</span>
-      )}
-      {detectedLabels && detectedLabels.length > 0 && (
+      {detectedLabels && (
         <>
           <LabelsAccordion labelName="Results">
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Confidence</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detectedLabels &&
-                  filterAndSortLabels(detectedLabels).map((label, index) => {
-                    const color = getColor(label.name);
-                    return (
-                      <tr
-                        key={index}
-                        onMouseOver={() => highlight(index, color)}
-                        onMouseOut={() => removeHighlight(index)}
-                      >
-                        <td>
-                          {label.name}
-                          {showLabelBoundingBoxes &&
-                            label.boundingBoxes.map((boundingBox, bbIndex) => (
-                              <div
-                                key={`bb-${bbIndex}`}
-                                className={`bb-${index}`}
-                                style={{
-                                  border: `1px solid ${color}`,
-                                  color: "#fff",
-                                  fontWeight: "bold",
-                                  position: "fixed",
-                                  height:
-                                    containerCoordinates.height *
-                                    boundingBox.Height,
-                                  left:
-                                    containerCoordinates.left +
-                                    boundingBox.Left *
-                                      containerCoordinates.width,
-                                  top:
-                                    containerCoordinates.top +
-                                    boundingBox.Top *
-                                      containerCoordinates.height,
-                                  width:
-                                    containerCoordinates.width *
-                                    boundingBox.Width
-                                }}
-                              >
-                                {label.name}
-                              </div>
-                            ))}
-                        </td>
-                        <td>{percentageToString(label.confidence)}%</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </Table>
+            {detectedLabels.length === 0 && (
+              <span>No custom labels detected for the given image.</span>
+            )}
+            {detectedLabels.length > 0 && (
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Confidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detectedLabels &&
+                    filterAndSortLabels(detectedLabels).map((label, index) => {
+                      const color = getColor(label.name);
+                      return (
+                        <tr
+                          key={index}
+                          onMouseOver={() => highlight(index, color)}
+                          onMouseOut={() => removeHighlight(index)}
+                        >
+                          <td>
+                            {label.name}
+                            {showLabelBoundingBoxes &&
+                              label.boundingBoxes.map(
+                                (boundingBox, bbIndex) => (
+                                  <div
+                                    key={`bb-${bbIndex}`}
+                                    className={`bb-${index}`}
+                                    style={{
+                                      border: `1px solid ${color}`,
+                                      color: "#fff",
+                                      fontWeight: "bold",
+                                      position: "fixed",
+                                      height:
+                                        containerCoordinates.height *
+                                        boundingBox.Height,
+                                      left:
+                                        containerCoordinates.left +
+                                        boundingBox.Left *
+                                          containerCoordinates.width,
+                                      top:
+                                        containerCoordinates.top +
+                                        boundingBox.Top *
+                                          containerCoordinates.height,
+                                      width:
+                                        containerCoordinates.width *
+                                        boundingBox.Width
+                                    }}
+                                  >
+                                    {label.name}
+                                  </div>
+                                )
+                              )}
+                          </td>
+                          <td>{percentageToString(label.confidence)}%</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            )}
           </LabelsAccordion>
           <LabelsAccordion labelName="Request" open={false}>
             <div className="prettify-json">

@@ -130,11 +130,7 @@ export default ({ gateway, projectVersionArn }) => {
                 marginLeft: "20px",
                 paddingBottom: "40px"
               }}
-            >
-              <h2>
-                Object and scene detection with Amazon Rekognition Custom Labels
-              </h2>
-            </Col>
+            ></Col>
             <Col md={8} sm={6}>
               {image && (
                 <img
