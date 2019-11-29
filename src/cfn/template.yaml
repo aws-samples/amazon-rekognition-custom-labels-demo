@@ -164,7 +164,7 @@ Resources:
               OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
         Enabled: true
         HttpVersion: http2
-        Comment: The Distribution for the Rekognition Meter Web UI
+        Comment: The Distribution for the Rekognition Custom Label Demo
         DefaultRootObject: index.html
         DefaultCacheBehavior:
           AllowedMethods:
