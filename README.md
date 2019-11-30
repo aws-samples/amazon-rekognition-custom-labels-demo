@@ -15,7 +15,8 @@ This demo allows to test Custom Labels with models trained by Amazon Rekognition
 * [Usage](#usage)
   * [Prerequisites](#prerequisites)
   * [Deployment](#deployment)
-  * [Accessing the application](#accessing-the-application)
+  * [Accessing and using the Demo](#accessing-and-using-the-demo)
+  * [Managing Projects with the AWS CLI](#managing-projects-with-the-aws-cli)
     * [1. Setup S3 bucket policies for Rekognition](#1-setup-s3-bucket-policies-for-rekognition)
     * [2. Create a new Custom Labels Project](#2-create-a-new-custom-labels-project)
     * [3. Create a new Custom Labels Project Version](#3-create-a-new-custom-labels-project-version)
@@ -32,9 +33,8 @@ The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognit
 <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
 
 
-After selecting an image from your local machine, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/latest/dg/API_DetectLabels.html).
+After selecting an image from your local machine, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/index.html).
 
-> TODO: Update with correct link
 
 ### Usage
 
@@ -86,11 +86,17 @@ You are responsible for the cost of the AWS services used while running this sam
    * You can monitor the stack creation progress in the "Events" tab.
 1. Note the *url* displayed in the *Outputs* tab for the stack. This is used to access the application.
 
-#### Accessing the Application
+#### Accessing and using the Demo
 
-The application is accessed using a web browser. The address is the *url* output from the CloudFormation stack created during the Deployment steps.
+The [Rekognition Custom Labels console](https://console.aws.amazon.com/rekognition) provides a visual interface to make labeling your images fast and simple. The interface allows you to apply a label to the entire image or to identify and label specific objects in images using bounding boxes with a simple click-and-drag interface.
 
-In order to use the demo, it is necessary to follow the following steps in order to setup some models to be used.
+Alternately, if you have a large data set, you can use [Amazon SageMaker Ground Truth](https://aws.amazon.com/sagemaker/groundtruth) to efficiently label your images at scale.
+
+The Console allows creation and management of projects, necessary for using this demo. If you prefer using the AWS CLI, check the next section ("Managing Projects with the AWS CLI").
+
+Finally, the application can be accessed using a web browser. The address is the `url` output from the CloudFormation stack created during the Deployment steps.
+
+#### Managing Projects with the AWS CLI
 
 #### 1. Setup S3 bucket policies for Rekognition
 
@@ -205,7 +211,7 @@ Output:
 
 The "*StartProjectVersion*" action allows to start running a version of a model.
 Starting a model takes a while to complete, after that its status will transit to "*RUNNING*" (to check the current state of the model, navigate to the "Project Summary" tab of the demo).
-Once the model is running, you can detect custom labels in new images by navigating to the "T*est your models*" tab of the demo.
+Once the model is running, you can detect custom labels in new images by navigating to the "*Test your models*" tab of the demo.
 
 You need to specify the minimum number of inference units to use. A single inference unit represents 1 hour of processing and can support up to 5 Transactions per Second (TPS). Use a higher number to increase the TPS throughput of your model. You are charged for the number of inference units that you use.
 

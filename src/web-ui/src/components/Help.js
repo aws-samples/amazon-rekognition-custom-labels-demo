@@ -37,6 +37,12 @@ export default () => (
       Amazon SageMaker Ground Truth
     </a>{" "}
     to efficiently label your images at scale.
+    <br />
+    <br />
+    The Console allows creation and management of projects, necessary for using
+    this demo. If you prefer using the AWS CLI, check the next section
+    ("Managing Projects with the AWS CLI").
+    <h2>Managing Projects with the AWS CLI</h2>
     <h4>1. Setup S3 bucket policies for Rekognition</h4>
     Amazon Rekognition will need to be able to read and write to Amazon S3
     during the training. This is an example policy for buckets in need of read
