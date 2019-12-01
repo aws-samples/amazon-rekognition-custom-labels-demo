@@ -24,7 +24,11 @@ export default () => {
 
   return (
     <div className="App">
-      <Header onHelp={onHelp} loadProjectList={loadProjectList} />
+      <Header
+        currentPage={currentPage}
+        onHelp={onHelp}
+        loadProjectList={loadProjectList}
+      />
       <Container>
         <SettingsHelp show={!window.rekognitionSettings} />
         {currentPage === "projects" && (
