@@ -164,14 +164,13 @@ export default () => (
     If you are using the AWS CLI, run:
     <pre>
       <code>
-        aws rekognition create-project-version \<br /> --project-arn
-        "YOUR_PROJECT_ARN" \<br /> --version-name VERSION_NAME \<br />{" "}
-        --output-config '
+        aws rekognition create-project-version --project-arn "YOUR_PROJECT_ARN"
+        --version-name VERSION_NAME --output-config '
         {JSON.stringify({
           S3Bucket: "OUTPUT_BUCKET",
           S3KeyPrefix: "OUTPUT_BUCKET_PREFIX"
         })}
-        ' \<br /> --training-data '
+        ' --training-data '
         {JSON.stringify({
           Assets: [
             {
@@ -184,7 +183,7 @@ export default () => (
             }
           ]
         })}
-        ' \<br /> --testing-data '
+        ' --testing-data '
         {JSON.stringify({
           Assets: [
             {
@@ -241,9 +240,8 @@ export default () => (
     If you are using the AWS CLI, run:
     <pre>
       <code>
-        aws rekognition start-project-version \<br /> --project-version-arn
-        YOUR_PROJECT_VERSION_ARN \<br /> --min-inference-units
-        MIN_INFERENCE_UNITS
+        aws rekognition start-project-version --project-version-arn
+        YOUR_PROJECT_VERSION_ARN --min-inference-units MIN_INFERENCE_UNITS
       </code>
     </pre>
     Output:
