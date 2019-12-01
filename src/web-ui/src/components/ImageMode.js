@@ -101,7 +101,7 @@ export default ({ gateway, projectVersionArn }) => {
         })
         .catch(e => {
           setFormState("error");
-          setErrorDetails("There was a network issue");
+          setErrorDetails(e);
         });
     }
 
