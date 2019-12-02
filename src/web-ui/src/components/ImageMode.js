@@ -32,8 +32,21 @@ export default ({ gateway, projectVersionArn }) => {
   const resetSummary = () =>
     setDetectedLabels(undefined) && setErrorDetails("");
 
-  const isValidImage = type =>
-    ["data:image/jpeg;base64", "data:image/png;base64"].includes(type);
+  const validateImage = (type, size) => {
+    const validType = [
+      "data:image/jpeg;base64",
+      "data:image/png;base64"
+    ].includes(type);
+
+    const validSize = size < 5000000;
+    const result = { isValid: validType && validSize };
+    const errors = [];
+    if (!validType) errors.push("the image format is not valid");
+    if (!validSize) errors.push("the image size is not valid");
+    if (errors.length > 0) result.error = errors.join(" and ");
+
+    return result;
+  };
 
   const processImage = file => {
     resetSummary();
@@ -41,10 +54,16 @@ export default ({ gateway, projectVersionArn }) => {
 
     reader.onload = () => {
       const [type, content] = reader.result.split(",");
-      const isValid = isValidImage(type);
-      setImage(isValid ? content : undefined);
-      setFormState(isValid ? "ready" : "error");
-      if (!isValid) setErrorDetails("The image format is not valid");
+      const validationResult = validateImage(type, file.size);
+
+      if (validationResult.isValid) {
+        setImage(content);
+        setFormState("ready");
+      } else {
+        setImage(undefined);
+        setFormState("error");
+        setErrorDetails(validationResult.error);
+      }
     };
     reader.onerror = () => setFormState("error");
 

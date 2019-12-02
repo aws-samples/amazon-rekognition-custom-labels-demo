@@ -18,7 +18,7 @@ Globals:
           - !Ref ServiceOverride
           - !Sub https://rekognition.${AWS::Region}.amazonaws.com
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "0.7"
+        VERSION: "0.8"
 
 Parameters:
   ResourcePrefix:
@@ -56,7 +56,6 @@ Resources:
     Properties:
       ServiceToken: !GetAtt LambdaSetup.Arn
       Region: !Ref AWS::Region
-      UpdateFrontend: 1
 
   WebUIBucket:
     Type: AWS::S3::Bucket
