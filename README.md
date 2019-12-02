@@ -4,7 +4,7 @@ Amazon Rekognition Custom Labels is a feature of Amazon Rekognition that enables
 
 Instead of having to train a model from scratch, which requires specialized machine learning expertise and millions of high-quality labeled images, customers can use Amazon Rekognition Custom Labels to achieve state-of-the-art performance for their unique image analysis needs.
 
-This demo allows to test Custom Labels with models trained by Amazon Rekognition.
+This demo allows you to test Custom Labels with models trained by Amazon Rekognition.
 
 [![Build Status](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo.svg?branch=master)](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo)
 
@@ -20,9 +20,9 @@ This demo allows to test Custom Labels with models trained by Amazon Rekognition
     * [1. Setup S3 bucket policies for Rekognition](#1-setup-s3-bucket-policies-for-rekognition)
     * [2. Create a new Custom Labels Project](#2-create-a-new-custom-labels-project)
     * [3. Create a new Custom Labels Project Version](#3-create-a-new-custom-labels-project-version)
-    * [4. Start the model](#4-start-the-model)
+    * [4. Running the model](#4-running-the-model)
   * [Stopping a running model](#stopping-a-running-model)
-* [Remove the application](#remove-the-application)
+* [Removing the demo application](#removing-the-demo-application)
 * [Making changes to the code and customization](#making-changes-to-the-code-and-customization)
 * [Contributing](#contributing)
 
@@ -33,7 +33,7 @@ The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognit
 <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
 
 
-After selecting an image from your local machine, Amplify calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/index.html).
+After you select an image from your local machine, the frontend app calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/index.html).
 
 
 ### Usage
@@ -49,7 +49,12 @@ To use the sample application you will require a [modern browser](https://canius
 The demo application is deployed as an [AWS CloudFormation](https://aws.amazon.com/cloudformation) template.
 
 > **Note**  
-You are responsible for the cost of the AWS services used while running this sample deployment. There is no additional cost for using this sample. For full details, see the pricing pages for each AWS service you will be using in this sample. Prices are subject to change.
+You are responsible for the cost of the AWS services used while running this sample deployment. There is no additional cost for using this sample. For full details, see the following pricing pages for each AWS service you will be using in this sample.  Prices are subject to change.
+> * [Amazon Rekognition Pricing](https://aws.amazon.com/rekognition/pricing/)
+> * [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)
+> * [Amazon Cognito Pricing](https://aws.amazon.com/cognito/pricing/)
+> * [Amazon CloudFront Pricing](https://aws.amazon.com/cloudfront/pricing/)
+
 
 1. Deploy the latest CloudFormation template by following the link below for your preferred AWS region:
 
@@ -64,42 +69,42 @@ You are responsible for the cost of the AWS services used while running this sam
 |**EU (Ireland)** (eu-west-1) | [![Launch the CustomLabelsDemo Stack with CloudFormation](docs/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=CustomLabelsDemo&templateURL=https://solution-builders-eu-west-1.s3.eu-west-1.amazonaws.com/amazon-rekognition-custom-labels-demo/latest/template.yaml)|
 
 2. If prompted, login using your AWS account credentials.
-1. You should see a screen titled "*Create Stack*" at the "*Specify template*" step. The fields specifying the CloudFormation template are pre-populated. Click the *Next* button at the bottom of the page.
-1. On the "*Specify stack details*" screen you may customize the following parameters of the CloudFormation stack:
+3. You should see a screen titled "*Create Stack*" at the "*Specify template*" step. The fields specifying the CloudFormation template are pre-populated. Click the **Next** button at the bottom of the page.
+4. On the "*Specify stack details*" screen you may customize the following parameters of the CloudFormation stack:
    * **Stack Name:** (Default: *CustomLabelsDemo*) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
    * **ResourcePrefix:** (Default: *RekogCustomLabelsDemo*) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
    * **CreateCloudFrontDistribution**  (Default: *true*) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes).
 
-   When completed, click *Next*
-1. [Configure stack options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html) if desired, then click *Next*.
-1. On the review you screen, you must check the boxes for:
+   When completed, click **Next**
+5. [Configure stack options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html) if desired, then click **Next**.
+6. On the review you screen, you must check the boxes for:
    * "*I acknowledge that AWS CloudFormation might create IAM resources*" 
    * "*I acknowledge that AWS CloudFormation might create IAM resources with custom names*"
    * "*I acknowledge that AWS CloudFormation might require the following capability: CAPABILITY_AUTO_EXPAND*"
 
-   These are required to allow CloudFormation to create a Role to allow access to resources needed by the stack and name the resources in a dynamic way.
-1. Click *Create Change Set* 
-1. On the *Change Set* screen, click *Execute* to launch your stack.
-   * You may need to wait for the *Execution status* of the change set to become "*AVAILABLE*" before the "*Execute*" button becomes available.
-1. Wait for the CloudFormation stack to launch. Completion is indicated when the "Stack status" is "*CREATE_COMPLETE*".
+   These are required to allow CloudFormation to create the IAM roles specified in the CloudFormation using both fixed and dynamic names.
+7. Click **Create Change Set**
+8. On the *Change Set* screen, click **Execute** to launch your stack.
+   * You may need to wait for the *Execution status* of the change set to become "*AVAILABLE*" before the "**Execute**" button becomes available.
+9. Wait for the CloudFormation stack to launch. Completion is indicated when the "Stack status" is "*CREATE_COMPLETE*".
    * You can monitor the stack creation progress in the "Events" tab.
-1. Note the *url* displayed in the *Outputs* tab for the stack. This is used to access the application.
+10. Note the *url* displayed in the *Outputs* tab for the stack. This is used to access the application.
 
 #### Accessing and using the Demo
 
 The [Rekognition Custom Labels console](https://console.aws.amazon.com/rekognition) provides a visual interface to make labeling your images fast and simple. The interface allows you to apply a label to the entire image or to identify and label specific objects in images using bounding boxes with a simple click-and-drag interface.
 
-Alternately, if you have a large data set, you can use [Amazon SageMaker Ground Truth](https://aws.amazon.com/sagemaker/groundtruth) to efficiently label your images at scale.
+Alternatively, if you have a large data set, you can use [Amazon SageMaker Ground Truth](https://aws.amazon.com/sagemaker/groundtruth) to efficiently label your images at scale.
 
-The Console allows creation and management of projects, necessary for using this demo. If you prefer using the AWS CLI, check the next section ("Managing Projects with the AWS CLI").
+The Console allows creation and management of projects, necessary for using this demo. If you prefer using the AWS CLI, consult the [Managing Projects with the AWS CLI](#managing-projects-with-the-aws-cli) section.
 
-Finally, the application can be accessed using a web browser. The address is the `url` output from the CloudFormation stack created during the Deployment steps.
+Once deployed, the application can be accessed using a web browser using the address specified in `url` output from the CloudFormation stack created during [deployment](#deployment) of the solution.
 
 #### Managing Projects with the AWS CLI
 
 #### 1. Setup S3 bucket policies for Rekognition
 
-Amazon Rekognition will need to be able to read and write to Amazon S3 during the training. This is an example policy for buckets in need of read access:
+Amazon Rekognition will need to be able to read and write to Amazon S3 during the training. The following bucket policy is an example you can use to grant Rekognition access to bucket where your manifest file and training data are stored:
 ```json
 {
   "Version": "2012-10-17",
@@ -133,7 +138,7 @@ Amazon Rekognition will need to be able to read and write to Amazon S3 during th
   ]
 }
 ```
-This is an example policy for buckets in need of write access:
+Similarly, the following bucket policy is an example you can use for buckets where the output of the model training will be written:
 ```json
 {
   "Version": "2012-10-17",
@@ -169,7 +174,7 @@ This is an example policy for buckets in need of write access:
 
 A project is a logical grouping of resources (images, Labels, models) and operations (training, evaluation and detection).
 
-*This operation requires permissions to perform the rekognition:CreateProject action.*
+*This operation requires you to have permission to perform the rekognition:CreateProject action.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -184,11 +189,11 @@ Output:
 
 #### 3. Create a new Custom Labels Project Version
 
-The "*CreateProjectVersion*" action is for creating a new version of a model and begin training. Models are managed as part of an Amazon Rekognition Custom Labels project.
-You can specify one training dataset and one testing dataset.
-Training takes a while to complete, after that its status will transit to "*TRAINING_COMPLETE*" (to check the current state of the model, navigate to the "*Project Summary*" tab of the demo). When on this stage, the model will be ready to be started.
+The "*CreateProjectVersion*" action is used to create a new version of a model and begin training. Models are managed as part of an Amazon Rekognition Custom Labels project. You can specify one training dataset and one testing dataset.
 
-*This operation requires permissions to perform the rekognition:CreateProjectVersion action. In addition to it, you need the Amazon S3 Buckets and this demo to be in the same region.*
+Training may take several hours to complete, after which the status will transition to "*TRAINING_COMPLETE*". To check the current state of the model training, navigate to the "*Project Summary*" tab of the demo. Once the status reaches "*TRAINING_COMPLETE*", the model will be ready to be used.
+
+*This operation requires you to have permission to perform the rekognition:CreateProjectVersion action. You also need the input/output Amazon S3 Buckets and the solution stack to be deployed in the same region.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -206,17 +211,19 @@ Output:
 }
 ```
 
-#### 4. Start the model
+#### 4. Running the Model
 
-The "*StartProjectVersion*" action allows to start running a version of a model.
-Starting a model takes a while to complete, after that its status will transit to "*RUNNING*" (to check the current state of the model, navigate to the "Project Summary" tab of the demo).
+The "*StartProjectVersion*" action allows you to start running a version of a model.
+
+Starting a model may take a while to complete, after that its status will transit to "*RUNNING*". To check the current state of the model, navigate to the "*Project Summary*" tab of the demo.
+
 Once the model is running, you can detect custom labels in new images by navigating to the "*Test your models*" tab of the demo.
 
-You need to specify the minimum number of inference units to use. A single inference unit represents 1 hour of processing and can support up to 5 Transactions per Second (TPS). Use a higher number to increase the TPS throughput of your model. You are charged for the number of inference units that you use.
+When performing the *StartProjectVersion* action, you need to specify the minimum number of inference units to use. A single inference unit represents 1 hour of processing and can support up to 5 Transactions per Second (TPS). Use a higher number to increase the TPS throughput of your model. You are charged for the number of inference units that you use.
 
-**NOTE: You are charged for the amount of time that the model is running. To stop a running model, check the next section ("Stopping a running model").**
+**NOTE: You are charged for the amount of time that the model is running. To stop a running model, consult the [Stopping a running model"](#stopping-a-running-model) section.**
 
-*This operation requires permissions to perform the rekognition:StartProjectVersion action.*
+*This operation requires you to have permission to perform the rekognition:StartProjectVersion action.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -235,7 +242,7 @@ Output:
 
 Stops a running model. The operation might take a while to complete.
 
-*This operation requires permissions to perform the rekognition:StopProjectVersion action.*
+*This operation requires you to have permission to perform the rekognition:StopProjectVersion action.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -247,13 +254,13 @@ Output:
   "Status": "STOPPING"
 }
 ```
-### Remove the application
+### Removing the demo application
 
-To remove the application open the AWS CloudFormation Console, click the CustomLabelsDemo project, right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "Events" tab. When it is done, the status will change from DELETE_IN_PROGRESS" to "DELETE_COMPLETE". It will then disappear from the list.
+To remove the demo application, open the AWS CloudFormation Console, click the **CustomLabelsDemo** project then right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "*Events*" tab. Once the stack deletion is complete, the status will change from "*DELETE_IN_PROGRESS*" to "*DELETE_COMPLETE*". It will then disappear from the list.
 
 ### Making changes to the code and customization
 
-The [contributing guidelines](CONTRIBUTING.md) contains some instructions about how to run the front-end locally and make changes to the back-end stack.
+The [contributing guidelines](CONTRIBUTING.md) contain instructions about how to run the front-end locally and make changes to the backend stack.
 
 ## Contributing
 
