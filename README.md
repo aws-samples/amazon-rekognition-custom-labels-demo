@@ -22,7 +22,7 @@ This demo allows you to test Custom Labels with models trained by Amazon Rekogni
     * [3. Create a new Custom Labels Project Version](#3-create-a-new-custom-labels-project-version)
     * [4. Running the model](#4-running-the-model)
   * [Stopping a running model](#stopping-a-running-model)
-* [Removing the application](#removing-the-application)
+* [Removing the demo application](#removing-the-demo-application)
 * [Making changes to the code and customization](#making-changes-to-the-code-and-customization)
 * [Contributing](#contributing)
 
