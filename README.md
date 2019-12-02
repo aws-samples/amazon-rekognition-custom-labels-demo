@@ -20,7 +20,7 @@ This demo allows you to test Custom Labels with models trained by Amazon Rekogni
     * [1. Setup S3 bucket policies for Rekognition](#1-setup-s3-bucket-policies-for-rekognition)
     * [2. Create a new Custom Labels Project](#2-create-a-new-custom-labels-project)
     * [3. Create a new Custom Labels Project Version](#3-create-a-new-custom-labels-project-version)
-    * [4. Start the model](#4-start-the-model)
+    * [4. Running the model](#4-running-the-model)
   * [Stopping a running model](#stopping-a-running-model)
 * [Removing the application](#removing-the-application)
 * [Making changes to the code and customization](#making-changes-to-the-code-and-customization)
