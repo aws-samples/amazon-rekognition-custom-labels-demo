@@ -54,7 +54,6 @@ You are responsible for the cost of the AWS services used while running this sam
 > * [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)
 > * [Amazon Cognito Pricing](https://aws.amazon.com/cognito/pricing/)
 > * [Amazon CloudFront Pricing](https://aws.amazon.com/cloudfront/pricing/)
-> * [AWS Lambda Pricing](https://aws.amazon.com/lambda/pricing/)
 
 
 1. Deploy the latest CloudFormation template by following the link below for your preferred AWS region:
