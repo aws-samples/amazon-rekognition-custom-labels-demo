@@ -28,7 +28,7 @@ export default () => (
     click-and-drag interface.
     <br />
     <br />
-    Alternately, if you have a large data set, you can use{" "}
+    Alternatively, if you have a large data set, you can use{" "}
     <a
       href="https://aws.amazon.com/sagemaker/groundtruth"
       target="_blank"
@@ -40,13 +40,24 @@ export default () => (
     <br />
     <br />
     The Console allows creation and management of projects, necessary for using
-    this demo. If you prefer using the AWS CLI, check the next section
+    this demo. If you prefer using the AWS CLI, consult the next section
     ("Managing Projects with the AWS CLI").
-    <h2>Managing Projects with the AWS CLI</h2>
+    <br />
+    <br />
+    To manage users, you can use the{" "}
+    <a
+      href="https://console.aws.amazon.com/cognito/users"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Cognito Users Pool console
+    </a>
+    .<h2>Managing Projects with the AWS CLI</h2>
     <h4>1. Setup S3 bucket policies for Rekognition</h4>
     Amazon Rekognition will need to be able to read and write to Amazon S3
-    during the training. This is an example policy for buckets in need of read
-    access:
+    during the training. The following bucket policy is an example you can use
+    to grant Rekognition access to bucket where your manifest file and training
+    data are stored:
     <div className="prettify-json">
       {JSON.stringify(
         {
@@ -81,7 +92,8 @@ export default () => (
         2
       )}
     </div>
-    This is an example policy for buckets in need of write access:
+    Similarly, the following bucket policy is an example you can use for buckets
+    where the output of the model training will be written:
     <div className="prettify-json">
       {JSON.stringify(
         {
@@ -120,7 +132,7 @@ export default () => (
     A project is a logical grouping of resources (images, Labels, models) and
     operations (training, evaluation and detection). <br /> <br />
     <i>
-      This operation requires permissions to perform the
+      This operation requires you to have permissions to perform the
       rekognition:CreateProject action.
     </i>
     <br />
@@ -142,22 +154,24 @@ export default () => (
       )}
     </div>
     <h4>3. Create a new Custom Labels Project Version</h4>
-    The "CreateProjectVersion" action is for creating a new version of a model
+    The "CreateProjectVersion" action is used to create a new version of a model
     and begin training. Models are managed as part of an Amazon Rekognition
-    Custom Labels project. <br /> You can specify one training dataset and one
-    testing dataset.
+    Custom Labels project. You can specify one training dataset and one testing
+    dataset.
     <br />
-    Training takes a while to complete, after that its status will transit to
-    "TRAINING_COMPLETE" (to check the current state of the model, navigate to
-    the "Project Summary" tab of this demo). When on this stage, the model will
-    be ready to be started. <br />
+    You can specify one training dataset and one testing dataset.
+    <br />
+    Training may take several hours to complete, after which the status will
+    transition to "TRAINING_COMPLETE" (to consult the current state of the model
+    training, navigate to the "Project Summary" tab of this demo). When on this
+    stage, the model will be ready to be used. <br />
     <br />
     <i>
-      This operation requires permissions to perform the
+      This operation requires you to have permissions to perform the
       rekognition:CreateProjectVersion action.
       <br />
-      In addition to it, you need the Amazon S3 Buckets and this demo to be in
-      the same region (in this case, {REGION}).
+      You also need the input/output Amazon S3 Buckets and the solution stack to
+      be deployed in the same region (in this case, {REGION}).
     </i>
     <br />
     <br />
@@ -209,30 +223,31 @@ export default () => (
         2
       )}
     </div>
-    <h4>4. Start the model</h4>
+    <h4>4. Running the model</h4>
     The "StartProjectVersion" action allows to start running a version of a
     model. <br />
     Starting a model takes a while to complete, after that its status will
-    transit to "RUNNING" (to check the current state of the model, navigate to
+    transit to "RUNNING" (to consult the current state of the model, navigate to
     the "Project Summary" tab of this demo). <br /> Once the model is running,
     you can detect custom labels in new images by navigating to the "Test your
     models" tab of this demo. <br />
     <br />
-    You need to specify the minimum number of inference units to use. A single
-    inference unit represents 1 hour of processing and can support up to 5
-    Transactions per Second (TPS). Use a higher number to increase the TPS
-    throughput of your model. You are charged for the number of inference units
-    that you use.
+    When performing the "StartProjectVersion" action, you need to specify the
+    minimum number of inference units to use. A single inference unit represents
+    1 hour of processing and can support up to 5 Transactions per Second (TPS).
+    Use a higher number to increase the TPS throughput of your model. You are
+    charged for the number of inference units that you use.
     <br />
     <br />
     <b>
       NOTE: You are charged for the amount of time that the model is running. To
-      stop a running model, check the next section ("Stopping a running model").
+      stop a running model, consult the next section ("Stopping a running
+      model").
     </b>
     <br />
     <br />
     <i>
-      This operation requires permissions to perform the
+      This operation requires you to have permissions to perform the
       rekognition:StartProjectVersion action.
     </i>
     <br />
@@ -259,7 +274,7 @@ export default () => (
     <br />
     <br />
     <i>
-      This operation requires permissions to perform the
+      This operation requires you to have permissions to perform the
       rekognition:StopProjectVersion action.
     </i>
     <br />
