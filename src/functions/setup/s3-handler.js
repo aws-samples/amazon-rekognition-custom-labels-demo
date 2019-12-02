@@ -6,7 +6,6 @@ const {
   FROM_BUCKET,
   CREATE_CLOUDFRONT_DISTRIBUTION,
   REGION,
-  REKOGNITION_BASE_URL,
   TO_BUCKET,
   VERSION
 } = process.env;
@@ -61,7 +60,6 @@ module.exports = s3 => {
           Bucket: TO_BUCKET,
           Key: CONFIG_FILENAME,
           Body: `window.rekognitionSettings = ${JSON.stringify({
-            baseUrl: REKOGNITION_BASE_URL,
             cognitoIdentityPool: COGNITO_IDENTITY_POOL,
             region: REGION
           })};`

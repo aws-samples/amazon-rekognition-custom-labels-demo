@@ -10,7 +10,7 @@ Amplify.configure({
     endpoints: [
       {
         name: "rekognitionApi",
-        endpoint: settings.baseUrl,
+        endpoint: `https://rekognition.${region}.amazonaws.com`,
         region,
         service: "rekognition"
       }

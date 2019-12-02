@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, Button, Card, Spinner } from "react-bootstrap";
 import { mapResults } from "../utils";
 
-export default ({ gateway, onVersionClick }) => {
+export default ({ gateway, onHelp, onVersionClick }) => {
   const [projects, setProjects] = useState(undefined);
   const [errorDetails, setErrorDetails] = useState(undefined);
 
@@ -36,6 +36,15 @@ export default ({ gateway, onVersionClick }) => {
         <Spinner animation="border" role="status" style={{ marginTop: "30px" }}>
           <span className="sr-only">Loading...</span>
         </Spinner>
+      )}
+      {projects && Object.keys(projects).length === 0 && (
+        <div className="no-projects">
+          There are no projects available in the current account. Check the{" "}
+          <Button variant="link" onClick={onHelp}>
+            help page
+          </Button>{" "}
+          if you need help on getting started.
+        </div>
       )}
       {projects &&
         Object.keys(projects).map((projectName, index) => (

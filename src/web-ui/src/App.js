@@ -34,6 +34,7 @@ export default () => {
         {currentPage === "projects" && (
           <ProjectsSummary
             gateway={gateway}
+            onHelp={onHelp}
             onVersionClick={loadProjectVersion}
           />
         )}

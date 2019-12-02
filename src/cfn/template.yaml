@@ -13,10 +13,6 @@ Globals:
         FROM_BUCKET: !Sub solution-builders-${AWS::Region}
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
-        REKOGNITION_BASE_URL: !If
-          - WithServiceOverride
-          - !Ref ServiceOverride
-          - !Sub https://rekognition.${AWS::Region}.amazonaws.com
         TO_BUCKET: !Ref WebUIBucket
         VERSION: "0.8"
 
@@ -33,14 +29,9 @@ Parameters:
     AllowedValues:
       - "true"
       - "false"
-  ServiceOverride:
-    Description: Allows to test the Demo with a different Rekognition Base Url. It shouldn't be required for most of use-cases.
-    Type: String
-    Default: ""
 
 Conditions:
   WithCloudFront: !Equals [!Ref CreateCloudFrontDistribution, "true"]
-  WithServiceOverride: !Not [!Equals [!Ref ServiceOverride, ""]]
 
 Outputs:
   url:
