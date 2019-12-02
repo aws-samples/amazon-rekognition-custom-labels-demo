@@ -5,7 +5,13 @@ const settings = window.rekognitionSettings || {};
 const region = settings.region || "eu-west-1";
 
 Amplify.configure({
-  Auth: { identityPoolId: settings.cognitoIdentityPool, region },
+  Auth: {
+    identityPoolId: settings.cognitoIdentityPool,
+    region,
+    mandatorySignIn: true,
+    userPoolId: settings.cognitoUserPoolId,
+    userPoolWebClientId: settings.cognitoUserPoolClientId
+  },
   API: {
     endpoints: [
       {

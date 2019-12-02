@@ -10,6 +10,8 @@ Globals:
     Environment:
       Variables:
         COGNITO_IDENTITY_POOL: !Ref CognitoIdentityPool
+        COGNITO_USER_POOL_ID: !Ref CognitoUserPool
+        COGNITO_USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
         FROM_BUCKET: !Sub solution-builders-${AWS::Region}
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
@@ -17,6 +19,10 @@ Globals:
         VERSION: "0.9"
 
 Parameters:
+  AdminEmail:
+    Description: Creates a username to be used for Authentication. It needs to be an e-mail address.
+    Type: String
+    AllowedPattern: ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
   ResourcePrefix:
     Description: AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
     Type: String
@@ -76,7 +82,11 @@ Resources:
     Type: AWS::Cognito::IdentityPool
     Properties:
       IdentityPoolName: !Sub ${ResourcePrefix}RekogIdentityPool
-      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders: 
+        -
+          ClientId: !Ref CognitoUserPoolClient
+          ProviderName: !GetAtt CognitoUserPool.ProviderName
+      AllowUnauthenticatedIdentities: false
 
   CognitoIdentityPoolRole:
     Type: AWS::Cognito::IdentityPoolRoleAttachment
@@ -85,6 +95,45 @@ Resources:
       Roles:
         authenticated: !GetAtt RekognitionInvokeRole.Arn
         unauthenticated: !GetAtt RekognitionInvokeRole.Arn
+
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub ${ResourcePrefix}RekogUsersPool
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: true
+        InviteMessageTemplate:
+          EmailMessage: 'Your Custom Labels Demo username is {username} and the temporary password is {####}'
+          EmailSubject: 'Your temporary password for Custom Labels Demo'
+          SMSMessage: 'Your Custom Labels Demo username is {username} and the temporary password is {####}'
+      AutoVerifiedAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 6
+          RequireLowercase: false
+          RequireNumbers: false
+          RequireSymbols: false
+          RequireUppercase: false
+
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref CognitoUserPool
+      ClientName: !Sub ${ResourcePrefix}RekogUsersPoolClient
+      GenerateSecret: false
+      RefreshTokenValidity: 30
+      
+  CognitoUserPoolUser:
+    Type: AWS::Cognito::UserPoolUser
+    Properties:
+      Username: !Ref AdminEmail
+      UserPoolId: !Ref CognitoUserPool
+      DesiredDeliveryMediums:
+        - EMAIL
+      UserAttributes:
+        - Name: email
+          Value: !Ref AdminEmail
 
   RekognitionInvokeRole:
     Type: AWS::IAM::Role

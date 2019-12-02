@@ -1,3 +1,4 @@
+import { Authenticator, Greetings, SignUp } from "aws-amplify-react";
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 
@@ -10,6 +11,7 @@ import Help from "./components/Help";
 import gateway from "./utils/gateway";
 
 export default () => {
+  const [authState, setAuthState] = useState(undefined);
   const [currentPage, setCurrentPage] = useState("projects");
   const [selectedProjectVersion, setSelectedProjectVersion] = useState(
     undefined
@@ -24,28 +26,37 @@ export default () => {
 
   return (
     <div className="App">
-      <Header
-        currentPage={currentPage}
-        onHelp={onHelp}
-        loadProjectList={loadProjectList}
-      />
-      <Container>
-        <SettingsHelp show={!window.rekognitionSettings} />
-        {currentPage === "projects" && (
-          <ProjectsSummary
-            gateway={gateway}
-            onHelp={onHelp}
-            onVersionClick={loadProjectVersion}
-          />
+      <Authenticator
+        onStateChange={s => setAuthState(s)}
+        hide={[Greetings, SignUp]}
+      >
+        {authState === "signedIn" && (
+          <>
+            <Header
+              currentPage={currentPage}
+              onHelp={onHelp}
+              loadProjectList={loadProjectList}
+            />
+            <Container>
+              <SettingsHelp show={!window.rekognitionSettings} />
+              {currentPage === "projects" && (
+                <ProjectsSummary
+                  gateway={gateway}
+                  onHelp={onHelp}
+                  onVersionClick={loadProjectVersion}
+                />
+              )}
+              {currentPage === "help" && <Help />}
+              {currentPage === "image" && (
+                <ImageMode
+                  gateway={gateway}
+                  projectVersionArn={selectedProjectVersion}
+                />
+              )}
+            </Container>
+          </>
         )}
-        {currentPage === "help" && <Help />}
-        {currentPage === "image" && (
-          <ImageMode
-            gateway={gateway}
-            projectVersionArn={selectedProjectVersion}
-          />
-        )}
-      </Container>
+      </Authenticator>
     </div>
   );
 };

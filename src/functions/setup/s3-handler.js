@@ -3,6 +3,8 @@ const unzip = require("unzipper");
 
 const {
   COGNITO_IDENTITY_POOL,
+  COGNITO_USER_POOL_ID,
+  COGNITO_USER_POOL_CLIENT_ID,
   FROM_BUCKET,
   CREATE_CLOUDFRONT_DISTRIBUTION,
   REGION,
@@ -61,6 +63,8 @@ module.exports = s3 => {
           Key: CONFIG_FILENAME,
           Body: `window.rekognitionSettings = ${JSON.stringify({
             cognitoIdentityPool: COGNITO_IDENTITY_POOL,
+            cognitoUserPoolId: COGNITO_USER_POOL_ID,
+            cognitoUserPoolClientId: COGNITO_USER_POOL_CLIENT_ID,
             region: REGION
           })};`
         })
