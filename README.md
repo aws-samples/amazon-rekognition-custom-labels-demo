@@ -101,7 +101,7 @@ The Console allows creation and management of projects, necessary for using this
 
 Once deployed, the application can be accessed using a web browser using the address specified in `url` output from the CloudFormation stack created during [deployment](#deployment) of the solution.
 
-In order to access the application, you need to use the Admin Email provided during Stack Creation as username. A temporary password will be sent to the e-mail address. After accessing, it will be necessary to create a new password and click "Change".
+When accessing the application for the first time, you need to use the Admin e-mail provided during Stack Creation as username. A temporary password will be sent to the same e-mail address. After authentication, it will be necessary to create a new password and click "Change".
 
 To manage users, you can use the [Cognito Users Pool console](https://console.aws.amazon.com/cognito/users).
 
