@@ -72,6 +72,7 @@ You are responsible for the cost of the AWS services used while running this sam
 3. You should see a screen titled "*Create Stack*" at the "*Specify template*" step. The fields specifying the CloudFormation template are pre-populated. Click the **Next** button at the bottom of the page.
 4. On the "*Specify stack details*" screen you may customize the following parameters of the CloudFormation stack:
    * **Stack Name:** (Default: *CustomLabelsDemo*) This is the name that is used to refer to this stack in CloudFormation once deployed. The value must be 15 characters or less.
+   * **AdminEmail:** This is the e-mail address used to create the Admin User in the Cognito User Pool.
    * **ResourcePrefix:** (Default: *RekogCustomLabelsDemo*) AWS Resources are named based on the value of this parameter. You must customise this if you are launching more than one instance of the stack within the same account.
    * **CreateCloudFrontDistribution**  (Default: *true*) Creates a CloudFront distribution for accessing the web interface of the demo. This must be enabled if S3 Block Public Access is enabled at an account level. **Note:** Creating a CloudFront distribution may significantly increase the deploy time (from approximately 5 minutes to over 30 minutes).
 
@@ -99,6 +100,10 @@ Alternatively, if you have a large data set, you can use [Amazon SageMaker Groun
 The Console allows creation and management of projects, necessary for using this demo. If you prefer using the AWS CLI, consult the [Managing Projects with the AWS CLI](#managing-projects-with-the-aws-cli) section.
 
 Once deployed, the application can be accessed using a web browser using the address specified in `url` output from the CloudFormation stack created during [deployment](#deployment) of the solution.
+
+In order to access the application, you need to use the Admin Email provided during Stack Creation as username. A temporary password will be sent to the e-mail address. After accessing, it will be necessary to create a new password and click "Change".
+
+To manage users, you can use the [Cognito Users Pool console](https://console.aws.amazon.com/cognito/users).
 
 #### Managing Projects with the AWS CLI
 

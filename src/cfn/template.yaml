@@ -45,7 +45,7 @@ Outputs:
       - WithCloudFront
       - !Sub "https://${CloudFrontDistribution.DomainName}"
       - !Sub "https://${WebUIBucket.RegionalDomainName}/index.html"
-    Description: Custom Labels Demo Url
+    Description: Amazon Rekognition Custom Labels Demo Url
 
 Resources:
   SetupWebUI:
@@ -103,9 +103,9 @@ Resources:
       AdminCreateUserConfig:
         AllowAdminCreateUserOnly: true
         InviteMessageTemplate:
-          EmailMessage: 'Your Custom Labels Demo username is {username} and the temporary password is {####}'
-          EmailSubject: 'Your temporary password for Custom Labels Demo'
-          SMSMessage: 'Your Custom Labels Demo username is {username} and the temporary password is {####}'
+          EmailMessage: 'Your Amazon Rekognition Custom Labels Demo username is {username} and the temporary password is {####}'
+          EmailSubject: 'Your temporary password for Amazon Rekognition Custom Labels Demo'
+          SMSMessage: 'Your Amazon Rekognition Custom Labels Demo username is {username} and the temporary password is {####}'
       AutoVerifiedAttributes:
         - email
       Policies:
