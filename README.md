@@ -49,13 +49,13 @@ To use the sample application you will require a [modern browser](https://canius
 The demo application is deployed as an [AWS CloudFormation](https://aws.amazon.com/cloudformation) template.
 
 > **Note**  
-You are responsible for the cost of the AWS services used while running this sample deployment. There is no additional cost for using this sample. For full details, see the following pricing pages for each AWS service you will be using in this sample. 
-> * [Amazon Rekognition](https://aws.amazon.com/rekognition/pricing/)
-> * [Amazon S3](https://aws.amazon.com/s3/pricing/)
-> * [Amazon Cognito](https://aws.amazon.com/cognito/pricing/)
-> * [Amazon CloudFront](https://aws.amazon.com/cloudfront/pricing/)
-> * [AWS Lambda](https://aws.amazon.com/lambda/pricing/)
->Prices are subject to change.
+You are responsible for the cost of the AWS services used while running this sample deployment. There is no additional cost for using this sample. For full details, see the following pricing pages for each AWS service you will be using in this sample.  Prices are subject to change.
+> * [Amazon Rekognition Pricing](https://aws.amazon.com/rekognition/pricing/)
+> * [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)
+> * [Amazon Cognito Pricing](https://aws.amazon.com/cognito/pricing/)
+> * [Amazon CloudFront Pricing](https://aws.amazon.com/cloudfront/pricing/)
+> * [AWS Lambda Pricing](https://aws.amazon.com/lambda/pricing/)
+
 
 1. Deploy the latest CloudFormation template by following the link below for your preferred AWS region:
 
@@ -175,7 +175,7 @@ Similarly, the following is an example bucket policy you can use for buckets whe
 
 A project is a logical grouping of resources (images, Labels, models) and operations (training, evaluation and detection).
 
-> This operation requires you to have permission to perform the rekognition:CreateProject action.
+*This operation requires you to have permission to perform the rekognition:CreateProject action.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -194,7 +194,7 @@ The "*CreateProjectVersion*" action is used to create a new version of a model a
 
 Training may take several hours to complete, after which the status will transition to "*TRAINING_COMPLETE*". To check the current state of the model training, navigate to the "*Project Summary*" tab of the demo. Once the status reaches "*TRAINING_COMPLETE*", the model will be ready to be used.
 
-> This operation requires you to have permission to perform the rekognition:CreateProjectVersion action. You also need the input/output Amazon S3 Buckets and the solution stack to be deployed in the same region.*
+*This operation requires you to have permission to perform the rekognition:CreateProjectVersion action. You also need the input/output Amazon S3 Buckets and the solution stack to be deployed in the same region.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -224,7 +224,7 @@ When performing the *StartProjectVersion* action, you need to specify the minimu
 
 **NOTE: You are charged for the amount of time that the model is running. To stop a running model, consult the [Stopping a running model"](#stopping-a-running-model) section.**
 
-> This operation requires you to have permission to perform the rekognition:StartProjectVersion action.
+*This operation requires you to have permission to perform the rekognition:StartProjectVersion action.*
 
 If you are using the AWS CLI, run:
 ```sh
@@ -243,7 +243,7 @@ Output:
 
 Stops a running model. The operation might take a while to complete.
 
-> This operation requires you to have permission to perform the rekognition:StopProjectVersion action.
+*This operation requires you to have permission to perform the rekognition:StopProjectVersion action.*
 
 If you are using the AWS CLI, run:
 ```sh
