@@ -105,7 +105,7 @@ Once deployed, the application can be accessed using a web browser using the add
 
 #### 1. Setup S3 bucket policies for Rekognition
 
-Amazon Rekognition will need to be able to read and write to Amazon S3 during the training. The following is an example bucket policy which you can use to grant Rekognition access to bucket where your manifest file and training data is stored:
+Amazon Rekognition will need to be able to read and write to Amazon S3 during the training. The following bucket policy is an example you can use to grant Rekognition access to bucket where your manifest file and training data are stored:
 ```json
 {
   "Version": "2012-10-17",
@@ -139,7 +139,7 @@ Amazon Rekognition will need to be able to read and write to Amazon S3 during th
   ]
 }
 ```
-Similarly, the following is an example bucket policy you can use for buckets where the output of the model training will be written:
+Similarly, the following bucket policy is an example you can use for buckets where the output of the model training will be written:
 ```json
 {
   "Version": "2012-10-17",
@@ -216,7 +216,7 @@ Output:
 
 The "*StartProjectVersion*" action allows you to start running a version of a model.
 
-Starting a model may take a while to complete, after that its status will transit to "*RUNNING*". To check the current state of the model, navigate to the "Project Summary" tab of the demo.
+Starting a model may take a while to complete, after that its status will transit to "*RUNNING*". To check the current state of the model, navigate to the "*Project Summary*" tab of the demo.
 
 Once the model is running, you can detect custom labels in new images by navigating to the "*Test your models*" tab of the demo.
 
@@ -257,7 +257,7 @@ Output:
 ```
 ### Removing the demo application
 
-To remove the demo application, open the AWS CloudFormation Console, click the CustomLabelsDemo project then right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "Events" tab. Once the stack deletion is complete, the status will change from DELETE_IN_PROGRESS" to "DELETE_COMPLETE". It will then disappear from the list.
+To remove the demo application, open the AWS CloudFormation Console, click the **CustomLabelsDemo** project then right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "*Events*" tab. Once the stack deletion is complete, the status will change from "*DELETE_IN_PROGRESS*" to "*DELETE_COMPLETE*". It will then disappear from the list.
 
 ### Making changes to the code and customization
 
