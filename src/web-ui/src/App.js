@@ -24,8 +24,11 @@ export default () => {
     setCurrentPage("image");
   };
 
+  const classNames = ["App"];
+  if (authState !== "signedIn") classNames.push("amplify-auth");
+
   return (
-    <div className="App">
+    <div className={classNames.join(" ")}>
       <Authenticator
         onStateChange={s => setAuthState(s)}
         hide={[Greetings, SignUp]}

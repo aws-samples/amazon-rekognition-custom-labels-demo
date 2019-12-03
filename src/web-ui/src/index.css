@@ -307,6 +307,14 @@ h4 {
   vertical-align: inherit;
 }
 
+.amplify-auth label {
+  margin-bottom: 0;
+}
+
+.amplify-auth input {
+  vertical-align: inherit;
+}
+
 @media (min-width: 0px) and (max-width: 1024px) {
   .projects .card {
     display: inline-block;
