@@ -16,7 +16,7 @@ Globals:
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "0.10"
+        VERSION: "0.11"
 
 Parameters:
   AdminEmail:
@@ -167,8 +167,17 @@ Resources:
           PolicyDocument:
             Statement:
               - Effect: Allow
-                Action: "s3:*"
-                Resource: "*"
+                Action: 
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                Resource:
+                  - !GetAtt WebUIBucket.Arn
+                  - !Sub ${WebUIBucket.Arn}/*
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: !Sub "arn:aws:s3:::solution-builders-${AWS::Region}/*"
         - PolicyName: RekogCustomLabelsDemo-cloudwatch-logs
           PolicyDocument:
             Statement:
