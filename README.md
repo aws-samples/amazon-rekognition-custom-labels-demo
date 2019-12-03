@@ -1,13 +1,13 @@
-## Amazon Rekognition Custom Labels Demo
+<p align="center">
+  <img src="docs/cllogo.png" alt="Amazon Rekognition Custom Labels Demo Logo" />
+</p>
+<h1 align="center">Amazon Rekognition Custom Labels Demo</h1>
 
 Amazon Rekognition Custom Labels is a feature of Amazon Rekognition that enables customers to build their own specialized machine learning (ML) based image analysis capabilities to detect unique objects and scenes integral to their specific use case. 
 
 Instead of having to train a model from scratch, which requires specialized machine learning expertise and millions of high-quality labeled images, customers can use Amazon Rekognition Custom Labels to achieve state-of-the-art performance for their unique image analysis needs.
 
 This demo allows you to test Custom Labels with models trained by Amazon Rekognition.
-
-[![Build Status](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo.svg?branch=master)](https://travis-ci.org/aws-samples/amazon-rekognition-custom-labels-demo)
-
 
 ### Index
 
@@ -30,7 +30,9 @@ This demo allows you to test Custom Labels with models trained by Amazon Rekogni
 
 The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognition) for label recognition, [Amazon Cognito](https://aws.amazon.com/cognito) for authenticating the Service Requests, and [Amazon CloudFront](https://aws.amazon.com/cloudfront), [Amazon S3](https://aws.amazon.com/s3), [AWS Amplify](https://aws.amazon.com/amplify), and [React](https://reactjs.org) for the front-end layer.
 
-<img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
+<p align="center">
+  <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
+</p>
 
 
 After you select an image from your local machine, the frontend app calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/index.html).
