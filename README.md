@@ -16,11 +16,6 @@ This demo allows you to test Custom Labels with models trained by Amazon Rekogni
   * [Prerequisites](#prerequisites)
   * [Deployment](#deployment)
   * [Accessing and using the Demo](#accessing-and-using-the-demo)
-  * [Managing Projects with the AWS CLI](#managing-projects-with-the-aws-cli)
-    * [1. Setup S3 bucket policies for Rekognition](#1-setup-s3-bucket-policies-for-rekognition)
-    * [2. Create a new Custom Labels Project](#2-create-a-new-custom-labels-project)
-    * [3. Create a new Custom Labels Project Version](#3-create-a-new-custom-labels-project-version)
-    * [4. Running the model](#4-running-the-model)
   * [Stopping a running model](#stopping-a-running-model)
 * [Removing the demo application](#removing-the-demo-application)
 * [Making changes to the code and customization](#making-changes-to-the-code-and-customization)
@@ -95,11 +90,7 @@ You are responsible for the cost of the AWS services used while running this sam
 
 #### Accessing and using the Demo
 
-The [Rekognition Custom Labels console](https://console.aws.amazon.com/rekognition) provides a visual interface to make labeling your images fast and simple. The interface allows you to apply a label to the entire image or to identify and label specific objects in images using bounding boxes with a simple click-and-drag interface.
-
-Alternatively, if you have a large data set, you can use [Amazon SageMaker Ground Truth](https://aws.amazon.com/sagemaker/groundtruth) to efficiently label your images at scale.
-
-The Console allows creation and management of projects, necessary for using this demo. If you prefer using the AWS CLI, consult the [Managing Projects with the AWS CLI](#managing-projects-with-the-aws-cli) section.
+To use the Demo, you need models trained by Amazon Rekognition. Consult the [Getting Started Documentation](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/gs-console.html) to learn how to create and train an Amazon Rekognition Custom Labels model.
 
 Once deployed, the application can be accessed using a web browser using the address specified in `url` output from the CloudFormation stack created during [deployment](#deployment) of the solution.
 
@@ -107,160 +98,6 @@ When accessing the application for the first time, you need to use the Admin e-m
 
 To manage users, you can use the [Cognito Users Pool console](https://console.aws.amazon.com/cognito/users).
 
-#### Managing Projects with the AWS CLI
-
-#### 1. Setup S3 bucket policies for Rekognition
-
-Amazon Rekognition will need to be able to read and write to Amazon S3 during the training. The following bucket policy is an example you can use to grant Rekognition access to bucket where your manifest file and training data are stored:
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AWSRekognitionS3AclBucketRead",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "rekognition.amazonaws.com"
-      },
-      "Action": [
-        "s3:GetBucketAcl",
-        "s3:GetBucketLocation"
-      ],
-      "Resource": "arn:aws:s3:::my-read-bucket"
-    },
-    {
-      "Sid": "AWSRekognitionS3GetBucket",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "rekognition.amazonaws.com"
-      },
-      "Action": [
-        "s3:GetObject",
-        "s3:GetObjectAcl",
-        "s3:GetObjectVersion",
-        "s3:GetObjectTagging"
-      ],
-      "Resource": "arn:aws:s3:::my-read-bucket/*"
-    }
-  ]
-}
-```
-Similarly, the following bucket policy is an example you can use for buckets where the output of the model training will be written:
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AWSRekognitionS3ACLBucketWrite",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "rekognition.amazonaws.com"
-      },
-      "Action": "s3:GetBucketAcl",
-      "Resource": "arn:aws:s3:::my-write-bucket"
-    },
-    {
-      "Sid": "AWSRekognitionS3PutObject",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "rekognition.amazonaws.com"
-      },
-      "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::my-write-bucket/my-write-prefix/*",
-      "Condition": {
-        "StringEquals": {
-          "s3:x-amz-acl": "bucket-owner-full-control"
-        }
-      }
-    }
-  ]
-}
-```
-
-#### 2. Create a new Custom Labels Project
-
-A project is a logical grouping of resources (images, Labels, models) and operations (training, evaluation and detection).
-
-*This operation requires you to have permission to perform the rekognition:CreateProject action.*
-
-If you are using the AWS CLI, run:
-```sh
-aws rekognition create-project --project-name YOUR_PROJECT_NAME
-```
-Output:
-```json
-{
-  "ProjectArn": "arn:aws:rekognition:us-east-1:123456123456:project/YOUR_PROJECT_NAME/1234561234567"
-}
-```
-
-#### 3. Create a new Custom Labels Project Version
-
-The "*CreateProjectVersion*" action is used to create a new version of a model and begin training. Models are managed as part of an Amazon Rekognition Custom Labels project. You can specify one training dataset and one testing dataset.
-
-Training may take several hours to complete, after which the status will transition to "*TRAINING_COMPLETE*". To check the current state of the model training, navigate to the "*Project Summary*" tab of the demo. Once the status reaches "*TRAINING_COMPLETE*", the model will be ready to be used.
-
-*This operation requires you to have permission to perform the rekognition:CreateProjectVersion action. You also need the input/output Amazon S3 Buckets and the solution stack to be deployed in the same region.*
-
-If you are using the AWS CLI, run:
-```sh
-aws rekognition create-project-version \
- --project-arn "YOUR_PROJECT_ARN" \
- --version-name VERSION_NAME \
- --output-config '{"S3Bucket":"OUTPUT_BUCKET","S3KeyPrefix":"OUTPUT_BUCKET_PREFIX"}' \
- --training-data '{"Assets":[{"GroundTruthManifest":{"S3Object":{"Bucket":"MANIFEST_BUCKET","Name":"MANIFEST_OBJECT"}}}]}' \
- --testing-data '{"Assets":[{"GroundTruthManifest":{"S3Object":{"Bucket":"MANIFEST_BUCKET","Name":"MANIFEST_OBJECT"}}}]}'
-```
-Output:
-```json
-{
-  "ProjectVersionArn": "arn:aws:rekognition:us-east-1:123456123456:project/YOUR_PROJECT_NAME/version/VERSION_NAME/1234561234567"
-}
-```
-
-#### 4. Running the Model
-
-The "*StartProjectVersion*" action allows you to start running a version of a model.
-
-Starting a model may take a while to complete, after that its status will transit to "*RUNNING*". To check the current state of the model, navigate to the "*Project Summary*" tab of the demo.
-
-Once the model is running, you can detect custom labels in new images by navigating to the "*Test your models*" tab of the demo.
-
-When performing the *StartProjectVersion* action, you need to specify the minimum number of inference units to use. A single inference unit represents 1 hour of processing and can support up to 5 Transactions per Second (TPS). Use a higher number to increase the TPS throughput of your model. You are charged for the number of inference units that you use.
-
-**NOTE: You are charged for the amount of time that the model is running. To stop a running model, consult the [Stopping a running model"](#stopping-a-running-model) section.**
-
-*This operation requires you to have permission to perform the rekognition:StartProjectVersion action.*
-
-If you are using the AWS CLI, run:
-```sh
-aws rekognition start-project-version \
- --project-version-arn YOUR_PROJECT_VERSION_ARN \
- --min-inference-units MIN_INFERENCE_UNITS
-```
-Output:
-```json
-{
-  "Status": "STARTING_HOSTING"
-}
-```
-
-#### Stopping a running model
-
-Stops a running model. The operation might take a while to complete.
-
-*This operation requires you to have permission to perform the rekognition:StopProjectVersion action.*
-
-If you are using the AWS CLI, run:
-```sh
-aws rekognition stop-project-version --project-version-arn YOUR_PROJECT_VERSION_ARN
-```
-Output:
-```json
-{
-  "Status": "STOPPING"
-}
-```
 ### Removing the demo application
 
 To remove the demo application, open the AWS CloudFormation Console, click the **CustomLabelsDemo** project then right-click and select "*Delete Stack*". Your stack will take some time to be deleted. You can track its progress in the "*Events*" tab. Once the stack deletion is complete, the status will change from "*DELETE_IN_PROGRESS*" to "*DELETE_COMPLETE*". It will then disappear from the list.
