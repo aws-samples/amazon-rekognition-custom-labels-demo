@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Card, Spinner } from "react-bootstrap";
+import { Alert, Button, Card, Spinner, Table } from "react-bootstrap";
 import { mapResults } from "../utils";
+
+import ProjectActions from "./ProjectActions";
 
 export default ({ gateway, onHelp, onVersionClick }) => {
   const [projects, setProjects] = useState(undefined);
   const [errorDetails, setErrorDetails] = useState(undefined);
+  const [projectsRefreshCycle, setProjectsRefreshCycle] = useState(1);
+
+  const refreshProjects = () =>
+    setProjectsRefreshCycle(projectsRefreshCycle + 1);
 
   useEffect(() => {
     gateway
@@ -17,7 +23,7 @@ export default ({ gateway, onHelp, onVersionClick }) => {
         ).then(x => setProjects(mapResults(x)))
       )
       .catch(e => setErrorDetails(e.toString()));
-  }, [gateway]);
+  }, [gateway, projectsRefreshCycle]);
 
   return (
     <div className="projects tab-content">
@@ -51,25 +57,37 @@ export default ({ gateway, onHelp, onVersionClick }) => {
           <Card key={index}>
             <Card.Header>{projectName}</Card.Header>
             <Card.Body>
-              <ul>
-                {projects[projectName].map((version, index) => (
-                  <li key={`v-${index}`}>
-                    {version.details.Status === "RUNNING" ? (
-                      <Button
-                        variant="link"
-                        onClick={() =>
-                          onVersionClick(version.details.ProjectVersionArn)
-                        }
-                      >
-                        {version.version}
-                      </Button>
-                    ) : (
-                      version.version
-                    )}{" "}
-                    ({version.details.Status})<br />
-                  </li>
-                ))}
-              </ul>
+              <Table>
+                <tbody>
+                  {projects[projectName].map((version, index) => (
+                    <tr key={`v-${index}`}>
+                      <td>
+                        {version.details.Status === "RUNNING" ? (
+                          <Button
+                            variant="link"
+                            onClick={() =>
+                              onVersionClick(version.details.ProjectVersionArn)
+                            }
+                          >
+                            {version.version}
+                          </Button>
+                        ) : (
+                          version.version
+                        )}
+                      </td>
+                      <td>{version.details.Status}</td>
+                      <td style={{ textAlign: "right" }}>
+                        <ProjectActions
+                          project={version.details}
+                          gateway={gateway}
+                          onError={e => setErrorDetails(e.toString())}
+                          refreshProjects={refreshProjects}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </Card.Body>
           </Card>
         ))}

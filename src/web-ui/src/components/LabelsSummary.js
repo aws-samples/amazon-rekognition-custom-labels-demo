@@ -100,7 +100,7 @@ export default ({
                                 (boundingBox, bbIndex) => (
                                   <div
                                     key={`bb-${bbIndex}`}
-                                    className={`bb-${index}`}
+                                    className={`bb-${index} custom-label-box`}
                                     style={{
                                       border: `1px solid ${color}`,
                                       color: "#fff",

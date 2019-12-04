@@ -177,6 +177,7 @@ body,
 
 .form-control {
   width: auto;
+  max-width: 100%;
 }
 
 .labels-accordion {
@@ -280,15 +281,21 @@ h4 {
   vertical-align: inherit;
 }
 
-.projects ul,
-.projects li {
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
+.projects .card td {
+  vertical-align: middle;
 }
 
-.projects li {
-  margin-bottom: 5px;
+.projects .card td,
+.projects .card tr:first-child {
+  border-top: 0;
+}
+
+.projects .card tr {
+  border-top: 1px solid #dee2e6;
+}
+
+.projects .card .model-action-button {
+  padding: 8px;
 }
 
 .awslogo {
@@ -315,6 +322,19 @@ h4 {
   vertical-align: inherit;
 }
 
+.custom-label-box {
+  white-space: nowrap;
+}
+
+@media (min-width: 0px) and (max-width: 780px) {
+  .projects .card td {
+    display: inline-block;
+    width: 100%;
+    border-top: 0;
+    text-align: center !important;
+  }
+}
+
 @media (min-width: 0px) and (max-width: 1024px) {
   .projects .card {
     display: inline-block;
@@ -325,6 +345,6 @@ h4 {
 @media (min-width: 1025px) {
   .projects .card {
     display: inline-block;
-    width: 50%;
+    width: 70%;
   }
 }
