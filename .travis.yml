@@ -25,7 +25,7 @@ before_deploy:
 deploy:
   - provider: releases
     api_key:
-      secure: TODO
+      secure: JDYWsSzioBkw0PpEPlfHv3Wu36cw2NxdQIZB5XRdXJvJcEcExGK+XAmbSaFNMfGBsrBKnpiElXWrw/W0F7DQflR6TbwVaX82HvOX5UCHGOKIeONOGNtt9eQCC09y/JXbJU1kAJ/t/dC41f95UIwpUskiw7RFsw7DlznoC4vIZV8UpBG3keMhmXLJs4YI3ZzpsDLDtntCrVaIrz6bpYcjx8UYnujJu8BjLefY6fobBo9tfVVOZCylpICKB/rl6a5qB7EQwEXx15LMMKicoqIT27O1hIwvnPsJ4VNGkBVUg9uHk1AQ9JLVE4Ywe3bsTTIFDwqWiQ3ez2Hdyv+b+zkjIVeOwzJGrS722Md2VjIW0AZCv1rCPNHN3HjOhoXTkOKSHKrt6Vax8kNIwJ3G8QcqDWwSZJ3NRtbcOgzrGrJqKi3eYf1wSIC2fXnu22PR3/9asiKnYa4lHp2Fxi1g20i3Dsszua1zbt2xWgpk/AvqQpBoY7IVgHsWTwt80nqOXQuwVOqoBQyloyQrMkMA94s/FtyRxtrKWWc2fVe5TRkgy2U54GIx7ZN4KyTgRbSsRUu3waOP/sF4h8vrWMNnY4gJx4qD+01I14Bk+YMjOk1cJk+etvLbADQF7irmpBtrDUh3qka4JlNDGIA1aqyngvuORZ4+VrI4UDo0VBax88SlQe0=
     file: $VERSION.zip
     skip_cleanup: true
     on:
