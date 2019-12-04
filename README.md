@@ -29,8 +29,14 @@ The Custom Labels Demo uses [Amazon Rekognition](https://aws.amazon.com/rekognit
   <img src="docs/amazon-rekognition-1.png" alt="Architecture Diagram" />
 </p>
 
+When accessing the Demo, the frontend app calls the `DescribeProjects` action in Amazon Rekognition. Then, for each project, it callse the `DescribeProjectVersions` action. This is for fetching the list and status of each model in the current account.
 
-After you select an image from your local machine, the frontend app calls the `DetectCustomLabels` action in Amazon Rekognition. To learn more about *DetectCustomLabels* [see the Rekognition documentation](https://docs.aws.amazon.com/rekognition/index.html).
+In addition to showing all the models, the UI allows to start all the models in the *TRAINING_COMPLETED* or *STOPPED* state by calling the `StartProjectVersion` action.
+The UI also allows to stop a model in the *RUNNING* state by calling the `StopProjectVersion` action.
+
+If you have any model in the *RUNNING* state, you can click the title and then select an image from your local machine to detect custom labels. The frontend app will call the `DetectCustomLabels` action in Amazon Rekognition.
+
+To learn more about Custom Labels [consult the documentation](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/what-is.html).
 
 
 ### Usage
