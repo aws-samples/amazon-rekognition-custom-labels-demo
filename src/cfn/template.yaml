@@ -16,7 +16,7 @@ Globals:
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "0.16"
+        VERSION: "0.17"
 
 Parameters:
   AdminEmail:
@@ -134,6 +134,8 @@ Resources:
       UserAttributes:
         - Name: email
           Value: !Ref AdminEmail
+        - Name: email_verified
+          Value: "true"
 
   RekognitionInvokeRole:
     Type: AWS::IAM::Role
