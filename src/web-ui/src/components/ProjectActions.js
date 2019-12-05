@@ -70,8 +70,8 @@ export default ({ gateway, onError, project, refreshProjects }) => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              Starting a model takes a while to complete. To check the current
-              state of the model, refresh the Projects page.
+              A model might take a while to start. To check the current state of
+              the model, refresh the Projects page.
               <br />
               <br />
               <b>
