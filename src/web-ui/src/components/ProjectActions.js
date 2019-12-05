@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 
+import { formatErrorMessage } from "../utils";
+
 export default ({ gateway, onError, project, refreshProjects }) => {
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const [formState, setFormState] = useState("initial");
   const [minInferenceUnits, setMinInferenceUnits] = useState("");
   const [show, setShow] = useState(false);
@@ -26,7 +29,10 @@ export default ({ gateway, onError, project, refreshProjects }) => {
         parseInt(minInferenceUnits, 10)
       )
       .then(() => setFormState("saved"))
-      .catch(() => setFormState("error"));
+      .catch(e => {
+        setErrorMessage(formatErrorMessage(e));
+        setFormState("error");
+      });
   };
 
   const stopModel = e => {
@@ -86,7 +92,7 @@ export default ({ gateway, onError, project, refreshProjects }) => {
               <Alert variant="warning">Please wait</Alert>
             )}
             {formState === "error" && (
-              <Alert variant="danger">An error happened. Retry.</Alert>
+              <Alert variant="danger">{errorMessage}</Alert>
             )}
             {formState === "saved" && (
               <Alert variant="success">The model is starting.</Alert>

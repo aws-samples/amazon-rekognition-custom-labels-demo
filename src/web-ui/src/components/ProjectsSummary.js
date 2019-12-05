@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Card, Spinner, Table } from "react-bootstrap";
-import { mapResults } from "../utils";
+import { formatErrorMessage, mapResults } from "../utils";
 
 import ProjectActions from "./ProjectActions";
 
@@ -22,7 +22,7 @@ export default ({ gateway, onHelp, onVersionClick }) => {
           )
         ).then(x => setProjects(mapResults(x)))
       )
-      .catch(e => setErrorDetails(e.toString()));
+      .catch(e => setErrorDetails(formatErrorMessage(e)));
   }, [gateway, projectsRefreshCycle]);
 
   return (
