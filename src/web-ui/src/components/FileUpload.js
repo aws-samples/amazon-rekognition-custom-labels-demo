@@ -5,7 +5,7 @@ export default ({ id, onChange }) => (
     <div className="form-prompt">
       Use your own image
       <div className="form-instructions">
-        Image must be .jpeg or .png format and no larger than 5MB. Your image
+        Image must be .jpeg or .png format and no larger than 4MB. Your image
         isn't stored.
       </div>
     </div>
