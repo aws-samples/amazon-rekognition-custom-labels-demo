@@ -135,7 +135,7 @@ Resources:
         - Name: email
           Value: !Ref AdminEmail
         - Name: email_verified
-          Value: True
+          Value: "true"
 
   RekognitionInvokeRole:
     Type: AWS::IAM::Role
