@@ -7,6 +7,6 @@
   "dependencies": {
     "aws-sdk": "2.580.0",
     "mime-types": "2.1.24",
-    "unzipper": "0.10.5"
+    "unzipper": "0.10.10"
   }
 }
