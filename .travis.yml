@@ -18,6 +18,8 @@ script:
 
 before_deploy:
   # - npm run pre-deploy-test
+  - mkdir -p ~/.aws
+  - cat >> ~/.aws/config <<<"[profile publisher]"$'\n'"credential_source=Environment"$'\n'"role_arn=${ROLE_ARN}"$'\n'"duration_seconds=900"
   - export VERSION=${TRAVIS_TAG:-$(npm run echo-version --silent)}
   - if [ -z "$TRAVIS_TAG" ]; then npm run tag; fi
   - npm run zip
@@ -33,7 +35,7 @@ deploy:
       condition: type != pull_request
   - provider: script
     skip_cleanup: true
-    script: npm run deploy
+    script: npm run deploy >/dev/null 2>&1
     on:
       tags: true
 
