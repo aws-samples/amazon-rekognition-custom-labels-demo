@@ -16,7 +16,7 @@ Globals:
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "0.18"
+        VERSION: "0.19"
 
 Parameters:
   AdminEmail:
@@ -151,7 +151,12 @@ Resources:
             Action:
               - sts:AssumeRole
               - sts:AssumeRoleWithWebIdentity
-
+            Condition:
+              StringEquals:
+                "cognito-identity.amazonaws.com:aud": !Ref CognitoIdentityPool
+              ForAnyValue:StringLike:
+                "cognito-identity.amazonaws.com:amr": "unauthenticated"
+  
   CustomResourceRole:
     Type: AWS::IAM::Role
     Properties:
