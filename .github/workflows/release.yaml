@@ -4,7 +4,7 @@ name: Release Version
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   release:
     name: Release Version
