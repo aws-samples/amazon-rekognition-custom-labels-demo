@@ -1,4 +1,3 @@
 awscli==1.16.292
 cfn_flip==1.2.2
 cfn_lint==0.25.5
-taskcat==0.8.50
