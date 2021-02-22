@@ -1,0 +1,57 @@
+---
+
+name: Release Version
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Release Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/* || true
+      # Cache
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      # Setup
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Set up Nodejs 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies
+        run: npm i
+      - name: Install python dependencies
+        run: pip3 install -r requirements.txt
+      - name: Build Template
+        run: npm run build
+      # Release if required
+      - name: Set version
+        id: version
+        run:  |
+          function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+          echo "THIS_VERSION=$(npm run echo-version --silent | sed s/^v//)" >> $GITHUB_ENV
+          echo "THIS_VERSION_COMPARABLE=$(version $(npm run echo-version --silent | sed s/^v//))" >> $GITHUB_ENV
+          echo "LATEST_VERSION_COMPARABLE=$(version $(git describe --tags $(git rev-list --tags --max-count=1) | sed s/^v// 2> /dev/null || echo '0'))" >> $GITHUB_ENV
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        if: env.THIS_VERSION_COMPARABLE > env.LATEST_VERSION_COMPARABLE
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          tag_name: v${{ env.THIS_VERSION }}
+          release_name: Release v${{ env.THIS_VERSION }}
+          body: |
+            See the commits for a list of features included in this release
+          draft: false
+          prerelease: false

@@ -1,0 +1,57 @@
+---
+
+name: Publish Version
+on:
+  release:
+    types: [created, edited]
+jobs:
+  publish:
+    name: Publish Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Fetch Tags
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/* || true
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.REGION }}
+      - name: Set version
+        id: version
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+      # Cache
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      # Setup
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Set up Nodejs 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install node dependencies
+        run: npm i
+      - name: Install python dependencies
+        run: pip3 install -r requirements.txt
+      # Package and Upload Archive
+      - name: Build Release
+        run: npm run build
+      - name: Upload artefact
+        run: npm run deploy
+        env:
+          CFN_BUCKET: ${{ secrets.CFN_BUCKET }}
