@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { findDOMNode } from "react-dom";
 import { Form } from "react-bootstrap";
 
-export default ({ onChange, onMount, projects, preSelected }) => {
+const ProjectSelect = ({ onChange, onMount, projects, preSelected }) => {
   const selected = useRef(undefined);
 
   const changeHandler = () => onChange(findDOMNode(selected.current).value);
@@ -23,7 +23,7 @@ export default ({ onChange, onMount, projects, preSelected }) => {
         <Form.Control
           as="select"
           onChange={changeHandler}
-          ref={x => (selected.current = x)}
+          ref={(x) => (selected.current = x)}
           defaultValue={preSelected}
         >
           {Object.keys(projects).map((project, i) =>
@@ -41,3 +41,5 @@ export default ({ onChange, onMount, projects, preSelected }) => {
     </div>
   );
 };
+
+export default ProjectSelect;

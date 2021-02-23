@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ id, onChange }) => (
+const FileUpload = ({ id, onChange }) => (
   <div className="form-element">
     <div className="form-prompt">
       Use your own image
@@ -29,3 +29,5 @@ export default ({ id, onChange }) => (
     </div>
   </div>
 );
+
+export default FileUpload;

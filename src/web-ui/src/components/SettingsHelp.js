@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Row } from "react-bootstrap";
 
-export default ({ show }) => {
+const SettingsHelp = ({ show }) => {
   if (show) {
     return (
       <Row>
@@ -22,3 +22,5 @@ export default ({ show }) => {
   }
   return "";
 };
+
+export default SettingsHelp;

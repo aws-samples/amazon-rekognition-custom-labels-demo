@@ -10,7 +10,7 @@ Amplify.configure({
     region,
     mandatorySignIn: true,
     userPoolId: settings.cognitoUserPoolId,
-    userPoolWebClientId: settings.cognitoUserPoolClientId
+    userPoolWebClientId: settings.cognitoUserPoolClientId,
   },
   API: {
     endpoints: [
@@ -18,19 +18,21 @@ Amplify.configure({
         name: "rekognitionApi",
         endpoint: `https://rekognition.${region}.amazonaws.com`,
         region,
-        service: "rekognition"
-      }
-    ]
-  }
+        service: "rekognition",
+      },
+    ],
+  },
 });
 
-export default (endpointName, data) =>
+const request = (endpointName, data) =>
   retryWrapper(() =>
     API.post("rekognitionApi", "", {
       body: data || {},
       headers: {
         "Content-Type": "application/x-amz-json-1.1",
-        "X-Amz-Target": `RekognitionService.${endpointName}`
-      }
+        "X-Amz-Target": `RekognitionService.${endpointName}`,
+      },
     })
   );
+
+export default request;

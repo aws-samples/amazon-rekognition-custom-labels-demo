@@ -1,10 +1,10 @@
 import request from "./request";
 
-export default {
+const gateway = {
   detectCustomLabels(projectVersionArn, image) {
     return request("DetectCustomLabels", {
       Image: { Bytes: image },
-      ProjectVersionArn: projectVersionArn
+      ProjectVersionArn: projectVersionArn,
     });
   },
 
@@ -19,13 +19,15 @@ export default {
   startProjectVersion(projectVersionArn, minInferenceUnits) {
     return request("StartProjectVersion", {
       ProjectVersionArn: projectVersionArn,
-      MinInferenceUnits: minInferenceUnits
+      MinInferenceUnits: minInferenceUnits,
     });
   },
 
   stopProjectVersion(projectVersionArn) {
     return request("StopProjectVersion", {
-      ProjectVersionArn: projectVersionArn
+      ProjectVersionArn: projectVersionArn,
     });
-  }
+  },
 };
+
+export default gateway;

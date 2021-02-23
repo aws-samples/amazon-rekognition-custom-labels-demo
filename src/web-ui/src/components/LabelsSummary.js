@@ -12,17 +12,17 @@ const generateRandomColor = () => {
   return color;
 };
 
-const filterAndSortLabels = labels =>
+const filterAndSortLabels = (labels) =>
   labels
-    .map(label => ({
+    .map((label) => ({
       boundingBoxes:
         label.Geometry && label.Geometry.BoundingBox
           ? [label.Geometry.BoundingBox]
           : [],
       confidence: label.Confidence,
-      name: label.Name
+      name: label.Name,
     }))
-    .filter(x => x.confidence > 0)
+    .filter((x) => x.confidence > 0)
     .sort((a, b) => {
       if (a.confidence > b.confidence) {
         return -1;
@@ -31,19 +31,19 @@ const filterAndSortLabels = labels =>
       } else return 0;
     });
 
-const percentageToString = percentage => Math.round(percentage * 10) / 10;
+const percentageToString = (percentage) => Math.round(percentage * 10) / 10;
 
-export default ({
+const LabelsSummary = ({
   apiResponse,
   containerCoordinates,
   detectedLabels,
   image,
   projectVersionArn,
-  showLabelBoundingBoxes
+  showLabelBoundingBoxes,
 }) => {
   const colors = useRef({});
 
-  const getColor = labelName => {
+  const getColor = (labelName) => {
     colors.current[labelName] =
       colors.current[labelName] || generateRandomColor();
     return colors.current[labelName];
@@ -51,16 +51,16 @@ export default ({
 
   const highlight = (index, color) => {
     const boxes = document.getElementsByClassName(`bb-${index}`);
-    Array.from(boxes).forEach(box => {
+    Array.from(boxes).forEach((box) => {
       box.style.opacity = 0.5;
       box.style.filter = "alpha(opacity=50)";
       box.style.backgroundColor = color;
     });
   };
 
-  const removeHighlight = index => {
+  const removeHighlight = (index) => {
     const boxes = document.getElementsByClassName(`bb-${index}`);
-    Array.from(boxes).forEach(box => {
+    Array.from(boxes).forEach((box) => {
       box.style.opacity = 1;
       box.style.filter = "alpha(opacity=100)";
       box.style.backgroundColor = null;
@@ -119,7 +119,7 @@ export default ({
                                           containerCoordinates.height,
                                       width:
                                         containerCoordinates.width *
-                                        boundingBox.Width
+                                        boundingBox.Width,
                                     }}
                                   >
                                     {label.name}
@@ -140,7 +140,7 @@ export default ({
               {JSON.stringify(
                 {
                   Image: { Bytes: image },
-                  ProjectVersionArn: projectVersionArn
+                  ProjectVersionArn: projectVersionArn,
                 },
                 undefined,
                 2
@@ -157,3 +157,5 @@ export default ({
     </div>
   );
 };
+
+export default LabelsSummary;

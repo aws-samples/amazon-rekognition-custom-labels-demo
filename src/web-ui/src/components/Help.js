@@ -1,6 +1,6 @@
 import React from "react";
 
-export default () => (
+const Help = () => (
   <div className="intro tab-content">
     <h2>Amazon Rekognition Custom Labels</h2>
     Amazon Rekognition Custom Labels is a new feature of Amazon Rekognition that
@@ -37,3 +37,5 @@ export default () => (
     </a>
   </div>
 );
+
+export default Help;

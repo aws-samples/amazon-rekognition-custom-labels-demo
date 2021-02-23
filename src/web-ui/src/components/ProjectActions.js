@@ -3,13 +3,13 @@ import { Alert, Button, Form, Modal } from "react-bootstrap";
 
 import { formatErrorMessage } from "../utils";
 
-export default ({ gateway, onError, project, refreshProjects }) => {
+const ProjectActions = ({ gateway, onError, project, refreshProjects }) => {
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [formState, setFormState] = useState("initial");
   const [minInferenceUnits, setMinInferenceUnits] = useState("");
   const [show, setShow] = useState(false);
 
-  const toggle = reset => {
+  const toggle = (reset) => {
     const hiding = show;
     setShow(!show);
     if (reset) {
@@ -19,7 +19,7 @@ export default ({ gateway, onError, project, refreshProjects }) => {
     if (hiding && formState === "saved") refreshProjects();
   };
 
-  const submitForm = e => {
+  const submitForm = (e) => {
     setFormState("saving");
     e.preventDefault();
 
@@ -29,24 +29,24 @@ export default ({ gateway, onError, project, refreshProjects }) => {
         parseInt(minInferenceUnits, 10)
       )
       .then(() => setFormState("saved"))
-      .catch(e => {
+      .catch((e) => {
         setErrorMessage(formatErrorMessage(e));
         setFormState("error");
       });
   };
 
-  const stopModel = e => {
+  const stopModel = (e) => {
     e.preventDefault();
 
     gateway
       .stopProjectVersion(project.ProjectVersionArn)
       .then(() => refreshProjects())
-      .catch(e => onError(e));
+      .catch((e) => onError(e));
   };
 
   const isFormValid = parseInt(minInferenceUnits, 10) > 0;
 
-  const validationAttributes = isValid =>
+  const validationAttributes = (isValid) =>
     isValid ? { isValid: true } : { isInvalid: true };
 
   if (project.Status === "RUNNING")
@@ -112,7 +112,7 @@ export default ({ gateway, onError, project, refreshProjects }) => {
                     type="text"
                     value={minInferenceUnits}
                     placeholder="Needs to be more than 0"
-                    onChange={e => setMinInferenceUnits(e.target.value)}
+                    onChange={(e) => setMinInferenceUnits(e.target.value)}
                     style={{ width: "100%" }}
                     {...validationAttributes(isFormValid)}
                   />
@@ -139,3 +139,5 @@ export default ({ gateway, onError, project, refreshProjects }) => {
 
   return "";
 };
+
+export default ProjectActions;

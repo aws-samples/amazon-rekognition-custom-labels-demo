@@ -10,7 +10,7 @@ import Help from "./components/Help";
 
 import gateway from "./utils/gateway";
 
-export default () => {
+const App = () => {
   const [authState, setAuthState] = useState(undefined);
   const [currentPage, setCurrentPage] = useState("projects");
   const [selectedProjectVersion, setSelectedProjectVersion] = useState(
@@ -19,7 +19,7 @@ export default () => {
 
   const onHelp = () => setCurrentPage("help");
   const loadProjectList = () => setCurrentPage("projects");
-  const loadProjectVersion = projectVersionArn => {
+  const loadProjectVersion = (projectVersionArn) => {
     setSelectedProjectVersion(projectVersionArn);
     setCurrentPage("image");
   };
@@ -30,7 +30,7 @@ export default () => {
   return (
     <div className={classNames.join(" ")}>
       <Authenticator
-        onStateChange={s => setAuthState(s)}
+        onStateChange={(s) => setAuthState(s)}
         hide={[Greetings, SignUp]}
       >
         {authState === "signedIn" && (
@@ -63,3 +63,5 @@ export default () => {
     </div>
   );
 };
+
+export default App;

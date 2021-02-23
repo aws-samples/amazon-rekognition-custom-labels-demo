@@ -7,7 +7,7 @@ import {
   Form,
   FormGroup,
   Row,
-  Spinner
+  Spinner,
 } from "react-bootstrap";
 import { mapResults } from "../utils";
 
@@ -17,7 +17,7 @@ import ProjectSelect from "./ProjectSelect";
 
 const validProjectVersionState = "RUNNING";
 
-export default ({ gateway, projectVersionArn }) => {
+const ImageMode = ({ gateway, projectVersionArn }) => {
   const [apiResponse, setApiResponse] = useState(undefined);
   const [detectedLabels, setDetectedLabels] = useState(undefined);
   const [errorDetails, setErrorDetails] = useState("");
@@ -35,7 +35,7 @@ export default ({ gateway, projectVersionArn }) => {
   const validateImage = (type, size) => {
     const validType = [
       "data:image/jpeg;base64",
-      "data:image/png;base64"
+      "data:image/png;base64",
     ].includes(type);
 
     const validSize = size < 4000000;
@@ -48,7 +48,7 @@ export default ({ gateway, projectVersionArn }) => {
     return result;
   };
 
-  const processImage = file => {
+  const processImage = (file) => {
     resetSummary();
     const reader = new FileReader();
 
@@ -74,7 +74,7 @@ export default ({ gateway, projectVersionArn }) => {
     }
   };
 
-  const tryFetchingLabels = value => {
+  const tryFetchingLabels = (value) => {
     setProjectVersion(value);
     if (image) setFormState("ready");
   };
@@ -88,12 +88,12 @@ export default ({ gateway, projectVersionArn }) => {
   const scrollHandler = useCallback(() => calculateImageCoordinates(), []);
 
   useEffect(() => {
-    gateway.describeProjects().then(x =>
+    gateway.describeProjects().then((x) =>
       Promise.all(
-        x.ProjectDescriptions.map(project =>
+        x.ProjectDescriptions.map((project) =>
           gateway.describeProjectVersions(project.ProjectArn)
         )
-      ).then(x => {
+      ).then((x) => {
         const result = mapResults(x, validProjectVersionState);
         if (result.length === 0) {
           setErrorDetails(
@@ -113,12 +113,12 @@ export default ({ gateway, projectVersionArn }) => {
       calculateImageCoordinates();
       gateway
         .detectCustomLabels(projectVersion, image)
-        .then(response => {
+        .then((response) => {
           setApiResponse(response);
           setDetectedLabels(response.CustomLabels);
           setFormState("processed");
         })
-        .catch(e => {
+        .catch((e) => {
           setFormState("error");
           setErrorDetails(e);
         });
@@ -134,7 +134,7 @@ export default ({ gateway, projectVersionArn }) => {
           <Alert
             variant="danger"
             style={{
-              display: formState === "error" ? "block" : "none"
+              display: formState === "error" ? "block" : "none",
             }}
           >
             An error happened{errorDetails && `: ${errorDetails}`}.{" "}
@@ -147,14 +147,14 @@ export default ({ gateway, projectVersionArn }) => {
               style={{
                 textAlign: "left",
                 marginLeft: "20px",
-                paddingBottom: "40px"
+                paddingBottom: "40px",
               }}
             ></Col>
             <Col md={8} sm={6}>
               {image && (
                 <img
                   alt="The uploaded content"
-                  ref={x => (imageContainer.current = x)}
+                  ref={(x) => (imageContainer.current = x)}
                   src={`data:image/png;base64, ${image}`}
                   style={{ width: "100%", margin: "10px" }}
                 />
@@ -172,7 +172,7 @@ export default ({ gateway, projectVersionArn }) => {
                   <FormGroup>
                     <FileUpload
                       id="asd"
-                      onChange={e => processImage(e.target.files[0])}
+                      onChange={(e) => processImage(e.target.files[0])}
                     />
                   </FormGroup>
                 </Form>
@@ -199,3 +199,5 @@ export default ({ gateway, projectVersionArn }) => {
     </Row>
   );
 };
+
+export default ImageMode;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 
-export default ({ currentPage, onHelp, loadProjectList }) => (
+const Header = ({ currentPage, onHelp, loadProjectList }) => (
   <Navbar
     style={{ backgroundColor: "#232f3e", marginBottom: "20px" }}
     variant="dark"
@@ -28,3 +28,5 @@ export default ({ currentPage, onHelp, loadProjectList }) => (
     </Container>
   </Navbar>
 );
+
+export default Header;

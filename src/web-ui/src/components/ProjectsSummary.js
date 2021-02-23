@@ -4,7 +4,7 @@ import { formatErrorMessage, mapResults } from "../utils";
 
 import ProjectActions from "./ProjectActions";
 
-export default ({ gateway, onHelp, onVersionClick }) => {
+const ProjectsSummary = ({ gateway, onHelp, onVersionClick }) => {
   const [projects, setProjects] = useState(undefined);
   const [errorDetails, setErrorDetails] = useState(undefined);
   const [projectsRefreshCycle, setProjectsRefreshCycle] = useState(1);
@@ -15,14 +15,14 @@ export default ({ gateway, onHelp, onVersionClick }) => {
   useEffect(() => {
     gateway
       .describeProjects()
-      .then(x =>
+      .then((x) =>
         Promise.all(
-          x.ProjectDescriptions.map(project =>
+          x.ProjectDescriptions.map((project) =>
             gateway.describeProjectVersions(project.ProjectArn)
           )
-        ).then(x => setProjects(mapResults(x)))
+        ).then((x) => setProjects(mapResults(x)))
       )
-      .catch(e => setErrorDetails(formatErrorMessage(e)));
+      .catch((e) => setErrorDetails(formatErrorMessage(e)));
   }, [gateway, projectsRefreshCycle]);
 
   return (
@@ -80,7 +80,7 @@ export default ({ gateway, onHelp, onVersionClick }) => {
                         <ProjectActions
                           project={version.details}
                           gateway={gateway}
-                          onError={e => setErrorDetails(e.toString())}
+                          onError={(e) => setErrorDetails(e.toString())}
                           refreshProjects={refreshProjects}
                         />
                       </td>
@@ -94,3 +94,5 @@ export default ({ gateway, onHelp, onVersionClick }) => {
     </div>
   );
 };
+
+export default ProjectsSummary;

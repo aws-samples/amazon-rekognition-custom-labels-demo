@@ -22,7 +22,7 @@ const CustomToggle = ({ children, open }) => {
   );
 };
 
-export default ({ labelName, children, open = true }) => {
+const LabelsAccordion = ({ labelName, children, open = true }) => {
   return (
     <Accordion
       defaultActiveKey={open ? "0" : undefined}
@@ -39,3 +39,5 @@ export default ({ labelName, children, open = true }) => {
     </Accordion>
   );
 };
+
+export default LabelsAccordion;
