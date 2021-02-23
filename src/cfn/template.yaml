@@ -6,7 +6,7 @@ Globals:
   Function:
     Runtime: nodejs12.x
     MemorySize: 128
-    Timeout: 30
+    Timeout: 60
     Environment:
       Variables:
         COGNITO_IDENTITY_POOL: !Ref CognitoIdentityPool
@@ -16,7 +16,7 @@ Globals:
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "0.23"
+        VERSION: "1.0"
 
 Parameters:
   AdminEmail:
