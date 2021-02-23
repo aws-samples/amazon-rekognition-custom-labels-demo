@@ -94,7 +94,6 @@ Resources:
       IdentityPoolId: !Ref CognitoIdentityPool
       Roles:
         authenticated: !GetAtt RekognitionInvokeRole.Arn
-        unauthenticated: !GetAtt RekognitionInvokeRole.Arn
 
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
@@ -140,8 +139,6 @@ Resources:
   RekognitionInvokeRole:
     Type: AWS::IAM::Role
     Properties:
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonRekognitionFullAccess
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -154,7 +151,19 @@ Resources:
             Condition:
               StringEquals:
                 "cognito-identity.amazonaws.com:aud": !Ref CognitoIdentityPool
-  
+      Policies:
+        - PolicyName: RekogCustomLabelsDemo-RekogInvoke
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - rekognition:DetectCustomLabels
+                  - rekognition:DescribeProjectVersions
+                  - rekognition:StopProjectVersion
+                  - rekognition:StartProjectVersion
+                  - rekognition:DescribeProjects
+                Resource: "*"
+    
   CustomResourceRole:
     Type: AWS::IAM::Role
     Properties:
