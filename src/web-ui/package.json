@@ -5,9 +5,9 @@
   "dependencies": {
     "aws-amplify": "^3.3.14",
     "aws-amplify-react": "^2.5.4",
-    "react": "^16.13.1",
+    "react": "^16.14.0",
     "react-bootstrap": "1.0.0",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-scripts": "^4.0.3"
   },
   "scripts": {
