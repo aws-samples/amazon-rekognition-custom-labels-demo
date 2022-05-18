@@ -32,7 +32,7 @@ jobs:
       with:
         python-version: '3.10' # have to use quotes due to 0 being removed
     - name: Install node dependencies
-     run: npm i
+      run: npm i
     - name: Install python packages
       run: pip install -Ur requirements.txt
     - name: Set up Ruby
