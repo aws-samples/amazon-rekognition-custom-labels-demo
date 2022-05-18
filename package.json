@@ -10,16 +10,16 @@
     "cfn-lambdas-dist": "if [ ! -d './backend/functions/setup/' ]; then mkdir -p backend/functions/setup/; fi",
     "cfn-test-local": "npm run cfn-build && rain deploy templates/template.yaml reko-cl -r eu-west-1",
     "deploy": "npm run zip && aws s3 cp ./`npm run echo-version --silent`.zip s3://$CFN_BUCKET/$npm_package_name/`npm run echo-version --silent`/$npm_package_name.zip",
-    "dev": "cd src/web-ui && npm run dev",
+    "dev": "npm run dev --workspace src/web-ui",
     "echo-version": "echo v`node -e \"console.log(require('node-yaml').readSync('templates/template.yaml').Globals.Function.Environment.Variables.VERSION)\"`",
     "pre-deploy-test": "taskcat -c ci/taskcat.yml --verbose --exclude docs --exclude src --exclude taskcat_outputs",
-    "postinstall": "cd src/web-ui && npm i && cd ../functions/setup && npm i",
-    "start": "cd src/web-ui && npm start",
+    "postinstall": "cd src/functions/setup && npm i",
+    "start": "npm start --workspace src/web-ui",
     "tag": "git tag `npm run echo-version --silent`",
-    "test": "cfn-lint templates/template.yaml && npm run webui-test",
-    "webui-build": "cd src/web-ui && npm run build",
+    "test": "npm run webui-test",
+    "webui-build": "npm run build --workspace src/web-ui",
     "webui-package": "cd src/web-ui/build && zip -r ../../../frontend.zip . -x *settings.js",
-    "webui-test": "cd src/web-ui && npm t",
+    "webui-test": "npm t --workspace src/web-ui",
     "zip": "zip -r `npm run echo-version --silent`.zip -@ < ci/include.lst"
   },
   "repository": {
@@ -33,5 +33,10 @@
   "devDependencies": {
     "js-yaml": "3.13.1",
     "node-yaml": "4.0.1"
+  },
+  "workspaces": ["src/web-ui"],
+  "overrides": {
+    "nth-check": "2.0.1",
+    "autoprefixer": "10.4.5"
   }
 }

@@ -4,7 +4,7 @@ Transform: AWS::Serverless-2016-10-31
 
 Globals:
   Function:
-    Runtime: nodejs12.x
+    Runtime: nodejs16.x
     MemorySize: 128
     Timeout: 60
     Environment:
@@ -16,7 +16,7 @@ Globals:
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "1.4"
+        VERSION: "1.5"
 
 Parameters:
   AdminEmail:
@@ -64,6 +64,10 @@ Resources:
             AllowedOrigins: ["*"]
             Id: !Sub ${ResourcePrefix}RekogCorsRule
             MaxAge: 3600
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
 
   WebUIBucketReadPolicy:
     Type: AWS::S3::BucketPolicy
@@ -196,8 +200,13 @@ Resources:
           PolicyDocument:
             Statement:
               - Effect: Allow
-                Action: "logs:*"
-                Resource: "arn:aws:logs:*:*:*"
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:*
+                  - !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:*:log-stream:*
 
   LambdaSetup:
     Type: AWS::Serverless::Function
