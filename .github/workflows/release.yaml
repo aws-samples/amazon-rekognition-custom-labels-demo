@@ -24,10 +24,10 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
-      - name: Set up Nodejs 12
+      - name: Set up Nodejs 16
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 16
       - name: Install dependencies
         run: npm i
       - name: Install python dependencies
