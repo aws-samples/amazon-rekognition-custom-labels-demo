@@ -16,7 +16,7 @@
     "postinstall": "cd src/functions/setup && npm i",
     "start": "npm start --workspace src/web-ui",
     "tag": "git tag `npm run echo-version --silent`",
-    "test": "cfn-lint templates/template.yaml && npm run webui-test",
+    "test": "npm run webui-test",
     "webui-build": "npm run build --workspace src/web-ui",
     "webui-package": "cd src/web-ui/build && zip -r ../../../frontend.zip . -x *settings.js",
     "webui-test": "npm t --workspace src/web-ui",
