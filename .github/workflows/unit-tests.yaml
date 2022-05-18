@@ -46,6 +46,6 @@ jobs:
     - name: Frontend unit tests
       run: npm test
     - name: CloudFormation lint test
-      run: cfn-lint src/cfn/**/*.yaml
+      run: cfn-lint src/cfn/**/*.yaml --ignore-checks E3030
     - name: CloudFormation nag test
       run: cfn_nag_scan --input-path src/cfn
