@@ -23,10 +23,16 @@ jobs:
         restore-keys: |
 
     # Setup
+      - name: Set up Nodejs 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.10' # have to use quotes due to 0 being removed
+    - name: Install node dependencies
+       run: npm i
     - name: Install python packages
       run: pip install -Ur requirements.txt
     - name: Set up Ruby
@@ -37,6 +43,8 @@ jobs:
       run: gem install cfn-nag
 
     # Run Tests
+    - name: Frontend unit tests
+       run: npm test
     - name: CloudFormation lint test
       run: cfn-lint src/cfn/**/*.yaml
     - name: CloudFormation nag test
