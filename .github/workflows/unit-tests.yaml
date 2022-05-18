@@ -44,7 +44,7 @@ jobs:
 
     # Run Tests
     - name: Frontend unit tests
-       run: npm test
+      run: npm test
     - name: CloudFormation lint test
       run: cfn-lint src/cfn/**/*.yaml
     - name: CloudFormation nag test
