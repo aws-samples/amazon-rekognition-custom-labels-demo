@@ -23,10 +23,10 @@ jobs:
         restore-keys: |
 
     # Setup
-      - name: Set up Nodejs 16
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
+    - name: Set up Nodejs 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
