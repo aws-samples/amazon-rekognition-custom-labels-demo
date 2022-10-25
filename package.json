@@ -37,6 +37,9 @@
   "workspaces": ["src/web-ui"],
   "overrides": {
     "nth-check": "2.0.1",
-    "autoprefixer": "10.4.5"
+    "autoprefixer": "10.4.5",
+    "recursive-readdir@2.2.2": {
+      "minimatch@3.0.4": "3.0.5"
+    }
   }
 }
