@@ -93,7 +93,7 @@ You are responsible for the cost of the AWS services used while running this sam
 
 #### Accessing and using the Demo
 
-To use the Demo, you need models trained by Amazon Rekognition. Consult the [Getting Started Documentation](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/gs-console.html) to learn how to create and train an Amazon Rekognition Custom Labels model.
+To use the Demo, you need models trained by Amazon Rekognition. Consult the [Getting Started Documentation](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/getting-started.html) to learn how to create and train an Amazon Rekognition Custom Labels model.
 
 Once deployed, the application can be accessed using a web browser using the address specified in `url` output from the CloudFormation stack created during [deployment](#deployment) of the solution.
 
