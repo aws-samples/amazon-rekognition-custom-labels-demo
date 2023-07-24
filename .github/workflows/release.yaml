@@ -20,14 +20,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       # Setup
-      - name: Set up Python 3.7
+      - name: Set up Python 3.10
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
-      - name: Set up Nodejs 16
+          python-version: '3.10' # have to use quotes due to 0 being removed
+      - name: Set up Nodejs 18
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
       - name: Install dependencies
         run: npm i
       - name: Install python dependencies

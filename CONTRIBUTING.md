@@ -78,7 +78,7 @@ We may ask you to sign a [Contributor License Agreement (CLA)](http://en.wikiped
 
 The following applications are required to contribute:
 
-* Node.js >=v12
+* Node.js >=v18
 * AWS CLI
 
 To start, run `npm install`.
