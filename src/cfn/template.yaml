@@ -4,9 +4,9 @@ Transform: AWS::Serverless-2016-10-31
 
 Globals:
   Function:
-    Runtime: nodejs16.x
-    MemorySize: 128
-    Timeout: 60
+    Runtime: nodejs18.x
+    MemorySize: 1024
+    Timeout: 300
     Environment:
       Variables:
         COGNITO_IDENTITY_POOL: !Ref CognitoIdentityPool
@@ -16,7 +16,7 @@ Globals:
         CREATE_CLOUDFRONT_DISTRIBUTION: !Ref CreateCloudFrontDistribution
         REGION: !Ref AWS::Region
         TO_BUCKET: !Ref WebUIBucket
-        VERSION: "1.7"
+        VERSION: "1.8"
 
 Parameters:
   AdminEmail:
