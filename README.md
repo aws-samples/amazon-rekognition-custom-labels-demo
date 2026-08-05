@@ -3,6 +3,9 @@
 </p>
 <h1 align="center">Amazon Rekognition Custom Labels Demo</h1>
 
+> [!WARNING]
+> This repository is archived and no longer maintained. It may no longer work, or refer to third-party libraries with known problems.
+
 Amazon Rekognition Custom Labels is a feature of Amazon Rekognition that enables customers to build their own specialized machine learning (ML) based image analysis capabilities to detect unique objects and scenes integral to their specific use case. 
 
 Instead of having to train a model from scratch, which requires specialized machine learning expertise and millions of high-quality labeled images, customers can use Amazon Rekognition Custom Labels to achieve state-of-the-art performance for their unique image analysis needs.
